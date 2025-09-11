@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import { useState } from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { StyleSheet, Text, View, Button, TouchableOpacity, ImageBackground } from 'react-native';
 import { auth } from '../firebase';
 import { useNavigation } from '@react-navigation/native';
 import styles from '../estilo';
@@ -25,17 +25,22 @@ export default function Registro() {
   }
 
   return (
-    <View style={styles.container}>
-      <Text>Cadastro de usuário</Text>
+      <ImageBackground source={require('../assets/back.png')} resizeMode='strech' style={styles.container}>
+      <Text style={styles.titulo}>Cadastro de usuário</Text>
 
-      <TextInput label='Nome' onChangeText={texto => setNome(texto)}/>
-      <TextInput label='Email' onChangeText={texto => setEmail(texto)}/>
-      <TextInput label='Senha' onChangeText={texto => setSenha(texto)}/>
-      <TextInput label='Fone' onChangeText={texto => setFone(texto)}/>
+    <View style={styles.inputcontainer}>
 
-      <Button title="Cadastrar" onPress={cadastrar}/>
-
+      <TextInput style={styles.input} label='Nome' onChangeText={texto => setNome(texto)}/>
+      <TextInput style={styles.input} label='Email' onChangeText={texto => setEmail(texto)}/>
+      <TextInput style={styles.input} secureTextEntry = {true} label='Senha' onChangeText={texto => setSenha(texto)}/>
+      <TextInput style={styles.input} label='Fone' onChangeText={texto => setFone(texto)}/>
     </View>
+      <TouchableOpacity style={styles.botaoCad} onPress={()=> navigation.replace('Cadastro')}>
+        <Text style={styles.text}>Cadastrar</Text>
+      </TouchableOpacity>  
+      <TouchableOpacity style={styles.botaoOp} onPress={()=> navigation.replace('Login')}>
+        <Text style={styles.textOp}>Login</Text>
+      </TouchableOpacity>  
+      </ImageBackground>
   );
 }
-

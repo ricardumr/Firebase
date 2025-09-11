@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { Button, StyleSheet, Text, View, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
+import { Button, StyleSheet, Text, View, TouchableOpacity, KeyboardAvoidingView, ImageBackground } from 'react-native';
 import { useState } from 'react';
 import { auth } from '../firebase';
 import { useNavigation } from '@react-navigation/native';
@@ -25,8 +25,9 @@ export default function Login() {
     
 
   return (
-    <KeyboardAvoidingView behavior='padding' style={styles.container}>
       
+        <ImageBackground source={require('../assets/back.png')} resizeMode='strech' style={styles.container}>
+      <KeyboardAvoidingView behavior='padding' style={styles.container}>
       <Text style={styles.titulo}>Tela de login</Text>
       
       <View style={styles.inputcontainer}>
@@ -40,18 +41,20 @@ export default function Login() {
         style={styles.input} 
         label='Senha'
         onChangeText={senha => setSenha (senha)}
+        secureTextEntry = {true} 
         />
         </View>
 
-        <TouchableOpacity style={styles.botao} onPress={logar}>
+        <TouchableOpacity style={styles.botaoLog} onPress={logar}>
           <Text style={styles.text}>entrar</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.botao} onPress={()=> navigation.replace('Registro')}>
-          <Text style={styles.text}>Registrar</Text>
+        <TouchableOpacity style={styles.botaoOp} onPress={()=> navigation.replace('Registro')}>
+          <Text style={styles.textOp}>Registrar</Text>
         </TouchableOpacity>
-        
 </KeyboardAvoidingView>
+</ImageBackground>        
+
   );
 }
 

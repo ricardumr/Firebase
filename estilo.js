@@ -3,19 +3,22 @@ import { StyleSheet } from "react-native";
 export default StyleSheet.create({
     container: {
     flex:1,
-    backgroundColor: '#fff',
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
+    width: '100%'
       },
 
     titulo:{
     fontSize:20,
   },
   input:{
-    padding:2
+    padding:2,
+    height: 20,
+    width: 300,
+    marginTop: 20
   },
   inputcontainer:{
-    
+    height: 180
   },
   form:{
     flex:1,
@@ -28,19 +31,61 @@ export default StyleSheet.create({
     
     
   },
-  botao:{
+  botaoLog:{
+    alignItems:"center",
+    justifyContent:"center",   
     backgroundColor:"#5792EB",
     pisition:'absoulute',
     fontSize:30,
     borderRadius:15,
     padding:5,
-    marginTop:10
+    marginTop:10,
+    width:"60%",
+    height:"5%",
   },
-  botaop:{
-    backgroundColor:"white"
+    botaoCad:{
+    alignItems:"center",
+    justifyContent:"center",
+    backgroundColor:"#5792EB",
+    position:'absoulute',
+    fontSize:30,
+    borderRadius:15,
+    padding:5,
+    marginTop:150,
+    width:"60%",
+    height:"5%",
+
+  },
+  botaoOp:{
+    alignItems:"center",
+    justifyContent:"center",
+    backgroundColor:"white",
+    borderColor:"#007BFF",
+    borderWidth:2,
+    borderRadius:15,
+    position:'absoulute',
+    fontSize:30,
+    borderRadius:15,
+    padding:5,
+    marginTop:10,
+    width:"60%",
+    height:"5%"
   },
   text:{
     color:"white",
     
+  },
+    textOp:{
+    color:"#007BFF",
+    marigin:10,
+    
+  },
+  imagem:{
+    height:200
+
+  },
+  logo: {
+    justifyContent:"space-evenly",
+    alignItems:"flex-start"
   }
 })
