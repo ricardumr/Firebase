@@ -1,26 +1,37 @@
 import { StatusBar } from 'expo-status-bar';
 import { useState } from 'react';
 import { StyleSheet, Text, View, Button, TouchableOpacity, ImageBackground } from 'react-native';
-import { auth } from '../firebase';
+import { auth, firestore } from '../firebase';
 import { useNavigation } from '@react-navigation/native';
 import styles from '../estilo';
 import { TextInput } from 'react-native-paper';
 
+import { Usuario } from '../model/usuario';
+
 export default function Registro() {
   
-  const [nome,setNome]=useState('');
-  const [email,setEmail]=useState('');
-  const [senha,setSenha]=useState('');
-  const [fone,setFone]=useState('');
+  const[formUsuario, setFormUsuario] = useState<Partial<Usuario>>({})
 
   const navigation = useNavigation();
 
   const cadastrar = () =>{
     auth
-    .createUserWithEmailAndPassword(email, senha)
+    .createUserWithEmailAndPassword(formUsuario.email, formUsuario.senha)
     .then(userCredentials => {
-            console.log('Logado como:', userCredentials.user.email)
-            navigation.replace("Home")
+            console.log('Logado como:', userCredentials.user?.email)
+            navigation.replace("Menu")
+
+          const refUsuario = firestore.collection("Usuario");
+          const idUsuario  = refUsuario.doc(auth.currentUser.uid);
+            idUsuario.set({
+              id      : auth.currentUser.uid,
+              nome    : formUsuario.nome,
+              email   : formUsuario.email,
+              senha   : formUsuario.senha,
+              fone    : formUsuario.fone,
+
+            })
+
     })
   }
 
@@ -30,12 +41,25 @@ export default function Registro() {
 
     <View style={styles.inputcontainer}>
 
-      <TextInput style={styles.input} label='Nome' onChangeText={texto => setNome(texto)}/>
-      <TextInput style={styles.input} label='Email' onChangeText={texto => setEmail(texto)}/>
-      <TextInput style={styles.input} secureTextEntry = {true} label='Senha' onChangeText={texto => setSenha(texto)}/>
-      <TextInput style={styles.input} label='Fone' onChangeText={texto => setFone(texto)}/>
+      <TextInput style={styles.input} label='Nome' onChangeText={valor => setFormUsuario({
+        ...formUsuario,
+        nome:valor
+      })} />
+      <TextInput style={styles.input} label='Email' onChangeText={valor => setFormUsuario({
+        ...formUsuario,
+        email:valor
+      })} />
+      <TextInput style={styles.input} secureTextEntry = {true} label='Senha' onChangeText={valor => setFormUsuario({
+        ...formUsuario,
+        senha:valor
+      })} />
+      <TextInput style={styles.input} label='Fone' onChangeText={valor => setFormUsuario({
+        ...formUsuario,
+        fone:valor
+      })} />
+
     </View>
-      <TouchableOpacity style={styles.botaoCad} onPress={()=> navigation.replace('Cadastro')}>
+      <TouchableOpacity style={styles.botaoCad} onPress={cadastrar}>
         <Text style={styles.text}>Cadastrar</Text>
       </TouchableOpacity>  
       <TouchableOpacity style={styles.botaoOp} onPress={()=> navigation.replace('Login')}>

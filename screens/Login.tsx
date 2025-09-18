@@ -18,7 +18,7 @@ export default function Login() {
         .signInWithEmailAndPassword(email,senha)
         .then(userCredentials => {
             console.log('Logado como:', userCredentials.user.email)
-            navigation.replace("Home")
+            navigation.replace("Menu")
         })
         .catch(erro => alert(erro.message))
     }
