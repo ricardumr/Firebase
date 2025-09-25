@@ -7,6 +7,7 @@ import styles from '../estilo';
 import { useState } from 'react';
 import { auth, firestore } from '../firebase';
 import { TextInput } from 'react-native-paper';
+import { Produto } from "../model/Produto"
 
 import Home from "./Home";
 
@@ -21,39 +22,55 @@ export default function Cadastro_pro() {
 
   const cadastrar = () =>{
 
-          const refProduto = firestore.collection("Produto");
-          const idProduto  = refProduto.doc(auth.currentUser.uid);
-            idProduto.set({
-              id           : auth.currentUser.uid,
-              nome         : formProduto.nome,
-              quantidade   : formProduto.quantidade,
-              validade        : formProduto.validade,
-              fone         : formProduto.fone,
+          const refProduto = firestore.collection("Usuario")
+            .doc(auth.currentUser?.uid)
+            .collection("Produto")
 
-            })
+            const novoProduto = new Produto(formProduto)
+
+          const idProduto  = refProduto.doc();
+          formProduto.id = idProduto.id
+            idProduto.set(novoProduto.toFirestore())
+          alert("Produto adicionado com sucesso")
+          setFormProduto({})
+          }
+
+            navigation.replace("Menu")
 
     }
-  }
+  
 
 
     return(
 <ImageBackground source={require('../assets/back.png')} resizeMode='strech' style={styles.container}>
-      <Text style={styles.titulo}>Cadastro de usuário</Text>
+      <Text style={styles.titulo}>Cadastro de produto</Text>
 
     <View style={styles.inputcontainer}>
 
       <TextInput style={styles.input} label='Nome' onChangeText={valor => setFormProduto({
-        ...formProduto,
+        ...formProduto
+        ,
         nome:valor
       })} />
+      value={formProduto}
       <TextInput style={styles.input} label='Quantidade' onChangeText={valor => setFormProduto({
         ...formProduto,
+        
         quantidade:valor
       })} />
-      <TextInput style={styles.input} label='validade' onChangeText={valor => setFormProduto({
+      value={formProduto}
+      <TextInput style={styles.input} label='Validade' onChangeText={valor => setFormProduto({
         ...formProduto,
+        
         validade:valor
       })} />
+      value={formProduto}
+              <TextInput style={styles.input} label='Fone' onChangeText={valor => setFormProduto({
+        ...formProduto,
+        
+        fone:valor
+      })} />
+      value={formProduto}
 
 
 

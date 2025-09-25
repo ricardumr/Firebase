@@ -6,7 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 import styles from '../estilo';
 import { TextInput } from 'react-native-paper';
 
-import { Usuario } from '../model/usuario';
+import { Usuario } from '../model/Usuario';
 
 export default function Registro() {
   

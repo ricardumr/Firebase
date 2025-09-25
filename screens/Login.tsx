@@ -46,7 +46,7 @@ export default function Login() {
         </View>
 
         <TouchableOpacity style={styles.botaoLog} onPress={logar}>
-          <Text style={styles.text}>entrar</Text>
+          <Text style={styles.text}>Entrar</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.botaoOp} onPress={()=> navigation.replace('Registro')}>
