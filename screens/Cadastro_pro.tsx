@@ -29,15 +29,15 @@ export default function Cadastro_pro() {
             const novoProduto = new Produto(formProduto)
 
           const idProduto  = refProduto.doc();
-          formProduto.id = idProduto.id
+          novoProduto.id = idProduto.id
             idProduto.set(novoProduto.toFirestore())
           alert("Produto adicionado com sucesso")
           setFormProduto({})
           }
 
-            navigation.replace("Menu")
+     
 
-    }
+    
   
 
 
@@ -51,27 +51,33 @@ export default function Cadastro_pro() {
         ...formProduto
         ,
         nome:valor
-      })} />
+      })} 
       value={formProduto}
+      />
+
       <TextInput style={styles.input} label='Quantidade' onChangeText={valor => setFormProduto({
         ...formProduto,
         
         quantidade:valor
-      })} />
+      })} 
       value={formProduto}
+      />
+
       <TextInput style={styles.input} label='Validade' onChangeText={valor => setFormProduto({
         ...formProduto,
         
         validade:valor
-      })} />
+      })} 
       value={formProduto}
+      />
+
               <TextInput style={styles.input} label='Fone' onChangeText={valor => setFormProduto({
         ...formProduto,
         
         fone:valor
-      })} />
+      })} 
       value={formProduto}
-
+/>
 
 
     </View>
