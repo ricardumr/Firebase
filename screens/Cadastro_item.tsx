@@ -1,13 +1,13 @@
-import * as React from "react"
+import * as React from "react";
 import { StyleSheet, Text, View, Button, TouchableOpacity, Image, ImageBackground } from 'react-native';
-import { NavigationContainer } from "@react-navigation/native"
-import { createDrawerNavigator } from "@react-navigation/drawer"
+import { NavigationContainer } from "@react-navigation/native";
+import { createDrawerNavigator } from "@react-navigation/drawer";
 import { useNavigation } from '@react-navigation/native';
 import styles from '../estilo';
 import { useState } from 'react';
 import { auth, firestore } from '../firebase';
 import { TextInput } from 'react-native-paper';
-import { Produto } from "../model/Produto"
+import { Item } from "../model/Item";
 
 import Home from "./Home";
 
@@ -16,23 +16,23 @@ const Drawer = createDrawerNavigator();
 
 export default function Cadastro_pro() {
   
-  const[formProduto, setFormProduto] = useState<Partial<Produto>>({})
+  const[formItem, setFormItem] = useState<Partial<Item>>({})
 
   const navigation = useNavigation();
 
   const cadastrar = () =>{
 
-          const refProduto = firestore.collection("Usuario")
+          const refItem = firestore.collection("Usuario")
             .doc(auth.currentUser?.uid)
-            .collection("Produto")
+            .collection("Item")
 
-            const novoProduto = new Produto(formProduto)
+            const novoItem = new Item(formItem)
 
-          const idProduto  = refProduto.doc();
-          novoProduto.id = idProduto.id
-            idProduto.set(novoProduto.toFirestore())
-          alert("Produto adicionado com sucesso")
-          setFormProduto({})
+          const idItem  = refItem.doc();
+          novoItem.id = idItem.id
+            idItem.set(novoItem.toFirestore())
+          alert("Item adicionado com sucesso")
+          setFormItem({})
           }
 
      
@@ -43,40 +43,40 @@ export default function Cadastro_pro() {
 
     return(
 <ImageBackground source={require('../assets/back.png')} resizeMode='strech' style={styles.container}>
-      <Text style={styles.titulo}>Cadastro de produto</Text>
+      <Text style={styles.titulo}>Cadastro de Item</Text>
 
     <View style={styles.inputcontainer}>
 
-      <TextInput style={styles.input} label='Nome' onChangeText={valor => setFormProduto({
-        ...formProduto
+      <TextInput style={styles.input} label='Nome' onChangeText={valor => setFormItem({
+        ...formItem
         ,
         nome:valor
       })} 
-      value={formProduto}
+      value={formItem.nome}
       />
 
-      <TextInput style={styles.input} label='Quantidade' onChangeText={valor => setFormProduto({
-        ...formProduto,
+      <TextInput style={styles.input} label='Quantidade' onChangeText={valor => setFormItem({
+        ...formItem,
         
         quantidade:valor
       })} 
-      value={formProduto}
+      value={formItem.quantidade}
       />
 
-      <TextInput style={styles.input} label='Validade' onChangeText={valor => setFormProduto({
-        ...formProduto,
+      <TextInput style={styles.input} label='Validade' onChangeText={valor => setFormItem({
+        ...formItem,
         
         validade:valor
       })} 
-      value={formProduto}
+      value={formItem.validade}
       />
 
-              <TextInput style={styles.input} label='Fone' onChangeText={valor => setFormProduto({
-        ...formProduto,
+              <TextInput style={styles.input} label='Fone' onChangeText={valor => setFormItem({
+        ...formItem,
         
         fone:valor
       })} 
-      value={formProduto}
+      value={formItem.fone}
 />
 
 

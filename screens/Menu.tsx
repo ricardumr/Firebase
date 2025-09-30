@@ -3,7 +3,7 @@ import { NavigationContainer } from "@react-navigation/native"
 import { createDrawerNavigator } from "@react-navigation/drawer"
 
 import Home from "./Home";
-import Cadastro_pro from "./Cadastro_pro"
+import Cadastro_pro from "./Cadastro_item"
 
 
 const Drawer = createDrawerNavigator();
