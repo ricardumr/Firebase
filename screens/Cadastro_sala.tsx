@@ -9,12 +9,14 @@ import { auth, firestore } from '../firebase';
 import { TextInput } from 'react-native-paper';
 import { Sala } from "../model/Sala";
 
+import { Picker } from "@react-native-picker/picker";
+
 import Home from "./Home";
 
 
 const Drawer = createDrawerNavigator();
 
-export default function Cadastro_pro() {
+export default function Cadastro_sala() {
   
   const[formSala, setFormSala] = useState<Partial<Sala>>({})
 
@@ -22,7 +24,7 @@ export default function Cadastro_pro() {
 
   const cadastrar = () =>{
 
-          const refSala = firestore.collection("Usuario")
+          const refSala = firestore.collection("sala")
             .doc(auth.currentUser?.uid)
             .collection("Sala")
 
@@ -48,20 +50,34 @@ export default function Cadastro_pro() {
     <View style={styles.inputcontainer}>
 
       <TextInput style={styles.input} label='Nome' onChangeText={valor => setFormSala({
-        ...formSala
-        ,
+        ...formSala,
         nome:valor
       })} 
       value={formSala.nome}
       />
-
-      <TextInput style={styles.input} label='Usuario' onChangeText={valor => setFormSala({
+<View style={styles.inputPicker}>
+      <Picker mode='dropdown'
+      prompt="Selecione um Usuário"
+      onValueChange={valor => setFormSala({
+        ...formSala,
+        tipo : valor
+      })}
+      >
+        <Picker.Item label="Selecione um usuário" value="0" style={styles.textPicker}/>
+        <Picker.Item label="Cachorro" value="Cachorro" />
+        <Picker.Item label="Gato" value="Gato" />
+         <Picker.Item label="Pássaro" value="Pássaro" />
+        <Picker.Item label="Equinos" value="Equinos" />
+      </Picker>
+</View>      
+      {/* <TextInput style={styles.input} label='Usuario' onChangeText={valor => setFormSala({ 
         ...formSala,
         
         usuario:valor
       })} 
       value={formSala.usuario}
-      />
+      /> */}
+     
 
       <TextInput style={styles.input} label='Item' onChangeText={valor => setFormSala({
         ...formSala,
@@ -78,9 +94,7 @@ export default function Cadastro_pro() {
       <TouchableOpacity style={styles.botaoCad} onPress={cadastrar}>
         <Text style={styles.text}>Cadastrar</Text>
       </TouchableOpacity>  
-      <TouchableOpacity style={styles.botaoOp} onPress={()=> navigation.replace('Login')}>
-        <Text style={styles.textOp}>Login</Text>
-      </TouchableOpacity>  
+
       </ImageBackground>
   );
 }

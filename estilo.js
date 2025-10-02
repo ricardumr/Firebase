@@ -12,6 +12,8 @@ export default StyleSheet.create({
     fontSize:20,
   },
   input:{
+    color :"white",
+    backgroundColor:"gray",
     padding:2,
     height: 20,
     width: 300,
@@ -87,5 +89,16 @@ export default StyleSheet.create({
   logo: {
     justifyContent:"space-evenly",
     alignItems:"flex-start"
+  },
+  inputPicker:{
+    backgroundColor:"gray" ,
+    color:"white",
+    marginTop: 20,
+    paddingLeft:8,
+    marginBottom:20,
+    borderRadius:2
+  },
+  textPicker:{
+    color:"white"
   }
 })

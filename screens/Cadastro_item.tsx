@@ -14,7 +14,7 @@ import Home from "./Home";
 
 const Drawer = createDrawerNavigator();
 
-export default function Cadastro_pro() {
+export default function Cadastro_item() {
   
   const[formItem, setFormItem] = useState<Partial<Item>>({})
 
@@ -35,12 +35,6 @@ export default function Cadastro_pro() {
           setFormItem({})
           }
 
-     
-
-    
-  
-
-
     return(
 <ImageBackground source={require('../assets/back.png')} resizeMode='strech' style={styles.container}>
       <Text style={styles.titulo}>Cadastro de Item</Text>
@@ -55,37 +49,41 @@ export default function Cadastro_pro() {
       value={formItem.nome}
       />
 
-      <TextInput style={styles.input} label='Quantidade' onChangeText={valor => setFormItem({
+      <TextInput style={styles.input} label='Estado' onChangeText={valor => setFormItem({
         ...formItem,
         
-        quantidade:valor
+        estado:valor
       })} 
-      value={formItem.quantidade}
+      value={formItem.estado}
       />
 
-      <TextInput style={styles.input} label='Validade' onChangeText={valor => setFormItem({
+      <TextInput style={styles.input} label='patrimonio' onChangeText={valor => setFormItem({
         ...formItem,
         
-        validade:valor
+        patrimonio:valor
       })} 
-      value={formItem.validade}
+      value={formItem.patrimonio}
       />
 
-              <TextInput style={styles.input} label='Fone' onChangeText={valor => setFormItem({
+              <TextInput style={styles.input} label='observacao' onChangeText={valor => setFormItem({
         ...formItem,
         
-        fone:valor
+        observacao:valor
       })} 
-      value={formItem.fone}
+      value={formItem.observacao}
+/>
+              <TextInput style={styles.input} label='ac' onChangeText={valor => setFormItem({
+        ...formItem,
+        
+        ac:valor
+      })} 
+      value={formItem.ac}
 />
 
 
     </View>
       <TouchableOpacity style={styles.botaoCad} onPress={cadastrar}>
         <Text style={styles.text}>Cadastrar</Text>
-      </TouchableOpacity>  
-      <TouchableOpacity style={styles.botaoOp} onPress={()=> navigation.replace('Login')}>
-        <Text style={styles.textOp}>Login</Text>
       </TouchableOpacity>  
       </ImageBackground>
   );

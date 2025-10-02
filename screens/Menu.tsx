@@ -3,7 +3,9 @@ import { NavigationContainer } from "@react-navigation/native"
 import { createDrawerNavigator } from "@react-navigation/drawer"
 
 import Home from "./Home";
-import Cadastro_pro from "./Cadastro_item"
+import Cadastro_item from "./Cadastro_item"
+import Cadastro_sala from "./Cadastro_sala";
+import Listar_itens from "./Listar_itens";
 
 
 const Drawer = createDrawerNavigator();
@@ -13,7 +15,10 @@ export default function Menu(){
     return(
         <Drawer.Navigator initialRouteName="Página Inicial">
             <Drawer.Screen name='Página Inicial' component = {Home}/>
-            <Drawer.Screen name='Cadastrar produto' component = {Cadastro_pro}/>
+            <Drawer.Screen name='Cadastrar item' component = {Cadastro_item}/>
+            <Drawer.Screen name='Cadastrar sala' component = {Cadastro_sala}/>
+            <Drawer.Screen name='Lista itens' component = {Listar_itens}/>
+            
         </Drawer.Navigator>    
     )
 }
