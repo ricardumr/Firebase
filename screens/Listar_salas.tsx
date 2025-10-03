@@ -16,30 +16,30 @@ import styles from "../estilo";
 import { useState } from "react";
 import { auth, firestore } from "../firebase";
 import { TextInput } from "react-native-paper";
-import { Item } from "../model/Item";
+import { Sala } from "../model/Sala";
 
 import Home from "./Home";
 
 const Drawer = createDrawerNavigator();
 
-export default function Listar_itens() {
-  const [itens, setItens] = useState<Item[]>([]);
+export default function Listar_salas() {
+  const [salas, setSalas] = useState<Sala[]>([]);
 
-  const refItem = firestore
+  const refSala = firestore
     .collection("Usuario")
-    .doc(auth.currentUser?.uid)  
-    .collection("Item");
+    .doc(auth.currentUser?.uid)
+    .collection("Sala");
 
   const listar = () => {
-    const subscriber = refItem.onSnapshot((query) => {
-      const itens = [];
+    const subscriber = refSala.onSnapshot((query) => {
+      const salas= = [];
       query.forEach((documento) => {
-        itens.push({
+        salas.push({
           ...documento.data(),
           key: documento.id,
         });
       });
-      setItens(itens);
+      setSalas(salas);
     });
     return () => subscriber();
   };
@@ -47,8 +47,8 @@ export default function Listar_itens() {
   return (
     <View style={styles.container}>
       <FlatList
-        data={itens}
-        renderItem={({ item }) => (
+        data={salas}
+        renderSala={({ item }) => (
           <View>
             <Text>sadadasdssadasd</Text>
             <Text>Nome: {item.nome}</Text>

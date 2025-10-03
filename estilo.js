@@ -17,10 +17,13 @@ export default StyleSheet.create({
     padding:2,
     height: 20,
     width: 300,
-    marginTop: 20
+    marginTop: 20,
+    
+
   },
   inputcontainer:{
-    height: 180
+    height: 180,
+    marginBottom:"50%"
   },
   form:{
     flex:1,
@@ -53,7 +56,7 @@ export default StyleSheet.create({
     fontSize:30,
     borderRadius:15,
     padding:5,
-    marginTop:150,
+
     width:"60%",
     height:"5%",
 

@@ -60,7 +60,7 @@ export default function Cadastro_sala() {
       prompt="Selecione um Usuário"
       onValueChange={valor => setFormSala({
         ...formSala,
-        tipo : valor
+        Usuario : valor
       })}
       >
         <Picker.Item label="Selecione um usuário" value="0" style={styles.textPicker}/>
