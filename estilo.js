@@ -116,24 +116,39 @@ export default StyleSheet.create({
   textPicker:{
     color:"white"
   },
-  row:{
-    flexDirection:"row",
-    backgroundColor:"red",
-    
-  },
-  column:{
-    flexDirection:"column",
-    backgroundColor:"gray",
-    padding:20
-  },
+row: {
+  flexDirection: "row", 
+  justifyContent: "space-between", // espaça as colunas
+  alignItems: "center",
+  width: "100%",//pra dxa alinnhado c o titulo
+  alignSelf: "center",
+  marginVertical: 4,
+},
+
+column: {
+  flex: 1,
+  alignItems: "center",
+  backgroundColor: "gray",
+  marginHorizontal: 3,
+  borderRadius: 4,
+  paddingVertical: 6,
+},
+
+tabelatext: {
+  flex: 1,
+  justifyContent:"center",
+  textAlign: "center",
+  fontWeight: "bold",
+  fontSize: 15,
+  color: "white",
+},
   tabela:{
     justifyContent:"center",
     alignItems:"center",
-    marginLeft:"50",
-    marginTop:"20",
-    marginRight:"50"
+    marginLeft:"22",
+    marginRight:"22",
+    
+    
   },
-  tabelatext:{
-    marginLeft:"50",
-  },  
+ 
 })

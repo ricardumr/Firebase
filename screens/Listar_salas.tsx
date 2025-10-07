@@ -1,49 +1,85 @@
-import { StatusBar } from 'expo-status-bar';
-import { useState } from 'react';
-import { StyleSheet, Text, View, Button, TextInput, TouchableOpacity, FlatList, Image } from 'react-native';
-import { auth, firestore } from '../firebase';
-import { useNavigation } from '@react-navigation/native';
-import style from "../estilo"
-import { Picker } from '@react-native-picker/picker';
+import * as React from "react";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Button,
+  TouchableOpacity,
+  Image,
+  ImageBackground,
+  FlatList,
+} from "react-native";
+import { NavigationContainer } from "@react-navigation/native";
+import { createDrawerNavigator } from "@react-navigation/drawer";
+import { useNavigation } from "@react-navigation/native";
+import styles from "../estilo";
+import { useState } from "react";
+import { auth, firestore } from "../firebase";
+import { TextInput } from "react-native-paper";
+import { Sala } from "../model/Sala";
 
-import { Sala } from '../model/Sala';
+import Home from "./Home";
 
+const Drawer = createDrawerNavigator();
 
 export default function Listar_salas() {
-    const[salas, setSalas]= useState<Sala[]>([]); //array das salas
-   const refSala = firestore
+  const [salas, setSalas] = useState<Sala[]>([]);
+
+  const refSala = firestore
     .collection("Usuario")
-    .doc(auth.currentUser?.uid)
-    .collection("Salas")
+    .doc(auth.currentUser?.uid)  
+    .collection("Sala");
 
-    const listar = () =>{
-        const relatorio = refSala
-        .onSnapshot( (query) => {
-            const salas = [];
-            query.forEach((documento) =>{
-                salas.push ({
-                    ...documento.data(),
-                    key: documento.id
-               });
-            })
-            setSalas(salas)
-        })
+  const listar = () => {
+    const subscriber = refSala.onSnapshot((query) => {
+      const salas = [];
+      query.forEach((documento) => {
+        salas.push({
+          ...documento.data(),
+          key: documento.id,
+        });
+      });
+      setSalas(salas);
+    });
+    return () => subscriber();
+  };
 
-    }
-   return(
-    <View style= {style.container}>
-<Button title= "Listar Salas " onPress={listar}/>
-        <FlatList
+  return (
+    <View style={styles.container}>
+      
+            <TouchableOpacity style={styles.botaoList} onPress={listar}>
+              <Text style={styles.text}>Listar salas</Text>
+            </TouchableOpacity> 
+      
+<View style={[styles.row]}>
+  <View style={styles.column}>
+    <Text style={styles.tabelatext}>Nome</Text>
+  </View>
+  <View style={styles.column}>
+    <Text style={styles.tabelatext}>Número de patrimônio</Text>
+  </View>
+  <View style={styles.column}>
+    <Text style={styles.tabelatext}>Estado</Text>
+  </View>
+</View>
+      <FlatList
         data={salas}
-        renderItem={({item}) => (
-            <View>
-                <Text>{item.nome}</Text>
-            </View>
-
-        )}
-
-    />
+        renderItem={({ item }) => (
+    <View style={styles.row}>
+      <View style={styles.column}>
+        <Text>{item.nome}</Text>
+      </View>
+      <View style={styles.column}>
+        <Text>{item.Usuario}</Text>
+      </View>
+      <View style={styles.column}>
+        <Text>{item.Item}</Text>
+      </View>
     </View>
-
-    )
-  }
+        )}
+        
+      />
+      
+    </View>
+  );
+}

@@ -17,12 +17,13 @@ import { useState } from "react";
 import { auth, firestore } from "../firebase";
 import { TextInput } from "react-native-paper";
 import { Item } from "../model/Item";
+import { Sala } from "../model/Sala"
 
 import Home from "./Home";
 
 const Drawer = createDrawerNavigator();
 
-export default function Listar_itens() {
+export default function Conferencia_inventario() {
   const [itens, setItens] = useState<Item[]>([]);
 
   const refItem = firestore
