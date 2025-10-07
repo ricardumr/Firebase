@@ -76,6 +76,18 @@ export default StyleSheet.create({
     width:"60%",
     height:"5%"
   },
+  botaoList:{
+    alignItems:"center",
+    justifyContent:"center",
+    backgroundColor:"#5792EB",
+    position:'absoulute',
+    fontSize:30,
+    borderRadius:15,
+    padding:5,
+    marginTop:60,
+    width:"60%",
+    height:"5%",
+  },
   text:{
     color:"white",
     
@@ -103,5 +115,25 @@ export default StyleSheet.create({
   },
   textPicker:{
     color:"white"
-  }
+  },
+  row:{
+    flexDirection:"row",
+    backgroundColor:"red",
+    
+  },
+  column:{
+    flexDirection:"column",
+    backgroundColor:"gray",
+    padding:20
+  },
+  tabela:{
+    justifyContent:"center",
+    alignItems:"center",
+    marginLeft:"50",
+    marginTop:"20",
+    marginRight:"50"
+  },
+  tabelatext:{
+    marginLeft:"50",
+  },  
 })

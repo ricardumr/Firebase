@@ -19,7 +19,7 @@ export default function Menu(){
             <Drawer.Screen name='Cadastrar item' component = {Cadastro_item}/>
             <Drawer.Screen name='Cadastrar sala' component = {Cadastro_sala}/>
             <Drawer.Screen name='Lista itens' component = {Listar_itens}/>
-            <Drawer.Screen name='Lista itens' component = {Listar_salas}/>
+            <Drawer.Screen name='Lista salas' component = {Listar_salas}/>
             
         </Drawer.Navigator>    
     )

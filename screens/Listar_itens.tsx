@@ -46,15 +46,32 @@ export default function Listar_itens() {
 
   return (
     <View style={styles.container}>
+      
+            <TouchableOpacity style={styles.botaoList} onPress={listar}>
+              <Text style={styles.text}>Listar itens</Text>
+            </TouchableOpacity> 
+      
+      <View style={styles.row}>
+        <Text style = {styles.tabela}>Nome</Text>
+        <Text style = {styles.tabela}>Número de patrimônio</Text>
+        <Text style = {styles.tabela}>Estado</Text>
+        </View>
       <FlatList
         data={itens}
         renderItem={({ item }) => (
-          <View>
-            <Text>sadadasdssadasd</Text>
-            <Text>Nome: {item.nome}</Text>
+          <View style={styles.column}>
+            <View style={styles .row}>
+
+            <Text style={styles.tabela}> {item.nome}</Text>
+            <Text style={styles.tabela}>{item.patrimonio}</Text>
+            <Text style={styles.tabela}>{item.estado}</Text>
+
+          </View>
           </View>
         )}
+        
       />
+      
     </View>
   );
 }
