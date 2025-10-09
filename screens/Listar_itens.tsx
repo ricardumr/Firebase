@@ -13,7 +13,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { useNavigation } from "@react-navigation/native";
 import styles from "../estilo";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { auth, firestore } from "../firebase";
 import { TextInput } from "react-native-paper";
 import { Item } from "../model/Item";
@@ -22,6 +22,8 @@ import Home from "./Home";
 
 const Drawer = createDrawerNavigator();
 
+const navigation = useNavigation();
+
 export default function Listar_itens() {
   const [itens, setItens] = useState<Item[]>([]);
 
@@ -29,6 +31,10 @@ export default function Listar_itens() {
     .collection("Usuario")
     .doc(auth.currentUser?.uid)  
     .collection("Item");
+    
+    useEffect( () => {
+      listar();
+    })
 
   const listar = () => {
     const subscriber = refItem.onSnapshot((query) => {
@@ -44,37 +50,43 @@ export default function Listar_itens() {
     return () => subscriber();
   };
 
+  const excluir = async(item) =>{
+    const resultado = await refPet
+    .doc(item.id)
+    .delete()
+    .then( () => {
+      alert("Excluído com sucesso!")
+      listar()
+    })
+    
+  }
+    const editar = (item: Item) =>{
+      navigation.navigate("Cadastrar item", {item : item})//nome do parametro pra esquerda e oq ele vai receber na direita
+    
+  }
+
   return (
     <View style={styles.container}>
       
-            <TouchableOpacity style={styles.botaoList} onPress={listar}>
-              <Text style={styles.text}>Listar itens</Text>
-            </TouchableOpacity> 
+
       
 <View style={[styles.row]}>
-  <View style={styles.column}>
+ 
     <Text style={styles.tabelatext}>Nome</Text>
-  </View>
-  <View style={styles.column}>
-    <Text style={styles.tabelatext}>Número de patrimônio</Text>
-  </View>
-  <View style={styles.column}>
-    <Text style={styles.tabelatext}>Estado</Text>
-  </View>
+ 
+
 </View>
       <FlatList
         data={itens}
         renderItem={({ item }) => (
-    <View style={styles.row}>
-      <View style={styles.column}>
-        <Text>{item.nome}</Text>
-      </View>
-      <View style={styles.column}>
-        <Text>{item.patrimonio}</Text>
-      </View>
-      <View style={styles.column}>
-        <Text>{item.estado}</Text>
-      </View>
+    <View style={styles.tabelatext}>
+      
+        <TouchableOpacity 
+        onPress={ () => editar(item)}
+        onLongPress={ () => excluir(item)}>
+          {item.nome}</TouchableOpacity>
+      
+     
     </View>
         )}
         

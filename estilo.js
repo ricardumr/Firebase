@@ -132,22 +132,33 @@ column: {
   marginHorizontal: 3,
   borderRadius: 4,
   paddingVertical: 6,
+  marginTop:10
 },
 
 tabelatext: {
-  flex: 1,
+  flex:1,
+  backgroundColor:"white",
+  borderRadius:15,
   justifyContent:"center",
   textAlign: "center",
   fontWeight: "bold",
   fontSize: 15,
-  color: "white",
+  color: "black",
+  marginLeft:40,
+  marginRight:40,
+  marginTop:10,
+  padding:10,
+  borderColor:"gray",
+  borderWidth:3
 },
   tabela:{
     justifyContent:"center",
     alignItems:"center",
     marginLeft:"22",
     marginRight:"22",
-    
+  },
+  touch:{
+    backgroundColor:"gray",
     
   },
  

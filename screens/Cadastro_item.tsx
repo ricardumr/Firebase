@@ -1,6 +1,6 @@
 import * as React from "react";
 import { StyleSheet, Text, View, Button, TouchableOpacity, Image, ImageBackground } from 'react-native';
-import { NavigationContainer } from "@react-navigation/native";
+import { NavigationContainer, useRoute } from "@react-navigation/native";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { useNavigation } from '@react-navigation/native';
 import styles from '../estilo';
@@ -8,15 +8,25 @@ import { useState } from 'react';
 import { auth, firestore } from '../firebase';
 import { TextInput } from 'react-native-paper';
 import { Item } from "../model/Item";
+import { useEffect } from "react";
 
 import Home from "./Home";
 
 
 const Drawer = createDrawerNavigator();
 
+
 export default function Cadastro_item() {
   
   const[formItem, setFormItem] = useState<Partial<Item>>({})
+
+  const route = useRoute();
+  
+  useEffect( () => {//recebe objeto item para editar
+    if(route.params){
+      setFormItem (route.params.item)
+    }
+  },[route.params])//depois usar isso no picker no sala: selectedValue={formSala.usuario}
 
   const navigation = useNavigation();
 
@@ -27,6 +37,17 @@ export default function Cadastro_item() {
             .collection("Item")
 
             const novoItem = new Item(formItem)
+            if(formItem.id){
+            const idItem  = refItem.doc(formItem.id);
+              idItem.update(novoItem.toFirestore())
+              .then( () => {
+                alert('Cadastro atualizado');
+                
+              })
+
+            }
+
+            
 
           const idItem  = refItem.doc();
           novoItem.id = idItem.id
@@ -48,6 +69,7 @@ export default function Cadastro_item() {
       })} 
       value={formItem.nome}
       />
+      
 
       <TextInput style={styles.input} label='Estado' onChangeText={valor => setFormItem({
         ...formItem,
