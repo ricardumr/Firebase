@@ -5,7 +5,7 @@ export class Item{
     public estado:          string;
     public patrimonio:      string;
     public observacao:      string;
-    public ac:              string;
+    public sala:           string;
 
     constructor(obj ?: Partial<Item>){
         if(obj){
@@ -14,7 +14,7 @@ export class Item{
             this.estado     =obj.estado
             this.patrimonio =obj.patrimonio
             this.observacao =obj.observacao
-            this.ac         =obj.ac
+            this.sala    =obj.sala
         }
     }
 
@@ -25,7 +25,7 @@ export class Item{
         "estado"        :       "${this.estado}",
         "patrimonio"    :       "${this.patrimonio}",
         "observacao"    :       "${this.observacao}",
-        "ac"            :       "${this.ac}",
+        "sala"          :       "${this.sala}"
       }`
       return objeto
     }
@@ -37,7 +37,7 @@ export class Item{
             estado      : this.estado,
             patrimonio  : this.patrimonio,
             observacao  : this.observacao,
-            ac          : this.ac
+            sala        : this.sala
         }
         return item
     }

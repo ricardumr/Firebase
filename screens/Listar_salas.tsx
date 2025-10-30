@@ -18,9 +18,6 @@ import { auth, firestore } from "../firebase";
 import { TextInput } from "react-native-paper";
 import { Sala } from "../model/Sala";
 
-import Home from "./Home";
-
-const Drawer = createDrawerNavigator();
 
 export default function Listar_salas() {
   const [salas, setSalas] = useState<Sala[]>([]);

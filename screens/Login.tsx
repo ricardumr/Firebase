@@ -26,7 +26,7 @@ export default function Login() {
 
   return (
       
-        <ImageBackground source={require('../assets/back.png')} resizeMode='strech' style={styles.container}>
+        <ImageBackground source={require('../assets/back.png')} resizeMode='stretch' style={styles.container}>
       <KeyboardAvoidingView behavior='padding' style={styles.container}>
       <Text style={styles.titulo}>Tela de login</Text>
       

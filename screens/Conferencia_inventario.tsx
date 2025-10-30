@@ -19,9 +19,6 @@ import { TextInput } from "react-native-paper";
 import { Item } from "../model/Item";
 import { Sala } from "../model/Sala"
 
-import Home from "./Home";
-
-const Drawer = createDrawerNavigator();
 
 export default function Conferencia_inventario() {
   const [itens, setItens] = useState<Item[]>([]);

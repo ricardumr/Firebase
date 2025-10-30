@@ -36,7 +36,7 @@ export default function Registro() {
   }
 
   return (
-      <ImageBackground source={require('../assets/back.png')} resizeMode='strech' style={styles.container}>
+      <ImageBackground source={require('../assets/back.png')} resizeMode='stretch' style={styles.container}>
       <Text style={styles.titulo}>Cadastro de usuário</Text>
 
     <View style={styles.inputcontainer}>

@@ -11,32 +11,29 @@ import { Sala } from "../model/Sala";
 
 import { Picker } from "@react-native-picker/picker";
 
-import Home from "./Home";
-
-
-const Drawer = createDrawerNavigator();
-
 export default function Cadastro_sala() {
   
 const [formSala, setFormSala] = useState<Partial<Sala>>({});
-  const [usuarios, setUsuarios] = useState<any[]>([]);
+const [formUsuario, setFormUsuario] = useState<Partial<Sala>>({});
+
+  const [usuario, setUsuario] = useState<any[]>([]);
   const [itens, setItens] = useState<any[]>([]);
   const navigation = useNavigation();
 
   // 🔹 Buscar usuários
-  useEffect(() => {
-    const unsubscribeUsuarios = firestore
-      .collection("usuarios") // nome da coleção de usuários
-      .onSnapshot((snapshot) => {
-        const listaUsuarios = snapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data()
-        }));
-        setUsuarios(listaUsuarios);
-      });
+  // useEffect(() => {
+  //   const unsubscribeUsuarios = firestore
+  //     .collection("usuarios") // nome da coleção de usuários
+  //     .onSnapshot((snapshot) => {
+  //       const listaUsuarios = snapshot.docs.map((doc) => ({
+  //         id: doc.id,
+  //         ...doc.data()
+  //       }));
+  //       setUsuarios(listaUsuarios);
+  //     });
 
-    return () => unsubscribeUsuarios();
-  }, []);
+  //   return () => unsubscribeUsuarios();
+  // }, []);
 
   // 🔹 Buscar itens
   useEffect(() => {
@@ -87,9 +84,15 @@ const [formSala, setFormSala] = useState<Partial<Sala>>({});
           onChangeText={valor => setFormSala({ ...formSala, nome: valor })}
           value={formSala.nome}
         />
+        <TextInput
+          style={styles.input}
+          label='Responsável pela sala'
+          onChangeText={valor => setFormUsuario({ ...formUsuario, nome: valor })}
+          value={formUsuario.nome}
+        />
 
         {/* Picker de Usuários */}
-        <View style={styles.inputPicker}>
+        {/* <View style={styles.inputPicker}>
           <Picker
             mode='dropdown'
             prompt="Selecione um Usuário"
@@ -101,10 +104,10 @@ const [formSala, setFormSala] = useState<Partial<Sala>>({});
               <Picker.Item key={user.id} label={user.nome || user.email || "Usuário sem nome"} value={user.id} />
             ))}
           </Picker>
-        </View>
+        </View> *ISSO TBM/}
 
         {/* Picker de Itens */}
-        <View style={styles.inputPicker}>
+        {/* <View style={styles.inputPicker}>
           <Picker
             mode='dropdown'
             prompt="Selecione um Item"
@@ -116,7 +119,7 @@ const [formSala, setFormSala] = useState<Partial<Sala>>({});
               <Picker.Item key={item.id} label={item.nome || item.descricao || "Item sem nome"} value={item.id} />
             ))}
           </Picker>
-        </View>
+        </View> DXA ESSA PORR PRO TCC SÓ*/}
 
       </View>
 

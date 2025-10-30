@@ -10,10 +10,7 @@ import { TextInput } from 'react-native-paper';
 import { Item } from "../model/Item";
 import { useEffect } from "react";
 
-import Home from "./Home";
 
-
-const Drawer = createDrawerNavigator();
 
 
 export default function Cadastro_item() {
@@ -57,7 +54,7 @@ export default function Cadastro_item() {
           }
 
     return(
-<ImageBackground source={require('../assets/back.png')} resizeMode='strech' style={styles.container}>
+<ImageBackground source={require('../assets/back.png')} resizeMode='stretch' style={styles.container}>
       <Text style={styles.titulo}>Cadastro de Item</Text>
 
     <View style={styles.inputcontainer}>
@@ -94,13 +91,7 @@ export default function Cadastro_item() {
       })} 
       value={formItem.observacao}
 />
-              <TextInput style={styles.input} label='ac' onChangeText={valor => setFormItem({
-        ...formItem,
-        
-        ac:valor
-      })} 
-      value={formItem.ac}
-/>
+
 
 
     </View>

@@ -19,7 +19,7 @@ export default function Home() {
   }
 
   return (
-    <ImageBackground source={require('../assets/back.png')} resizeMode='strech' style={styles.container}>
+    <ImageBackground source={require('../assets/back.png')} resizeMode='stretch' style={styles.container}>
       <View style = {styles.logo}></View>
       <Text>Bem vindo! {auth.currentUser?.email}</Text>
       

@@ -18,13 +18,9 @@ import { auth, firestore } from "../firebase";
 import { TextInput } from "react-native-paper";
 import { Item } from "../model/Item";
 
-import Home from "./Home";
-
-const Drawer = createDrawerNavigator();
-
-const navigation = useNavigation();
 
 export default function Listar_itens() {
+  const navigation = useNavigation();
   const [itens, setItens] = useState<Item[]>([]);
 
   const refItem = firestore
