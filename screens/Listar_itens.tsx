@@ -22,6 +22,7 @@ import { Item } from "../model/Item";
 export default function Listar_itens() {
   const navigation = useNavigation();
   const [itens, setItens] = useState<Item[]>([]);
+  const [load, setLoad] = useState(true)
 
   const refItem = firestore
     .collection("Usuario")
@@ -29,7 +30,9 @@ export default function Listar_itens() {
     .collection("Item");
     
     useEffect( () => {
-      listar();
+      if(load){
+        listar();
+      }
     })
 
   const listar = () => {
@@ -42,12 +45,14 @@ export default function Listar_itens() {
         });
       });
       setItens(itens);
+      setLoad(false);
+      console.log(itens)
     });
     return () => subscriber();
   };
 
   const excluir = async(item) =>{
-    const resultado = await refPet
+    const resultado = await refItem
     .doc(item.id)
     .delete()
     .then( () => {
@@ -68,26 +73,28 @@ export default function Listar_itens() {
       
 <View style={[styles.row]}>
  
-    <Text style={styles.tabelatext}>Nome</Text>
+    <Text style={styles.tabelatext}>Lista de Itens</Text>
  
 
 </View>
       <FlatList
         data={itens}
+        refreshing={load}
         renderItem={({ item }) => (
-    <View style={styles.tabelatext}>
-      
-        <TouchableOpacity 
-        onPress={ () => editar(item)}
-        onLongPress={ () => excluir(item)}>
-          {item.nome}</TouchableOpacity>
-      
-     
-    </View>
+          <View style={styles.tabelatext}>
+            
+              <TouchableOpacity 
+              onPress={ () => editar(item)}
+              onLongPress={ () => excluir(item)}>
+                <Text>{item.nome}</Text>
+              </TouchableOpacity>
+            
+          
+          </View>
         )}
         
       />
       
     </View>
-  );
+  )
 }

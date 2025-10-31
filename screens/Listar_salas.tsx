@@ -13,19 +13,27 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { useNavigation } from "@react-navigation/native";
 import styles from "../estilo";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { auth, firestore } from "../firebase";
 import { TextInput } from "react-native-paper";
 import { Sala } from "../model/Sala";
 
 
 export default function Listar_salas() {
+  const navigation = useNavigation();
   const [salas, setSalas] = useState<Sala[]>([]);
+  const [load, setLoad] = useState(true)
 
   const refSala = firestore
     .collection("Usuario")
     .doc(auth.currentUser?.uid)  
     .collection("Sala");
+    
+    useEffect( () => {
+      if(load){
+        listar();
+      }
+    })
 
   const listar = () => {
     const subscriber = refSala.onSnapshot((query) => {
@@ -37,46 +45,56 @@ export default function Listar_salas() {
         });
       });
       setSalas(salas);
+      setLoad(false);
+      console.log(salas)
     });
     return () => subscriber();
   };
 
+  const excluir = async(sala) =>{
+    const resultado = await refSala
+    .doc(sala.id)
+    .delete()
+    .then( () => {
+      alert("Excluído com sucesso!")
+      listar()
+    })
+    
+  }
+    const editar = (item: Sala) =>{
+      navigation.navigate("Cadastrar item", {item : sala})//nome do parametro pra esquerda e oq ele vai receber na direita
+    
+  }
+
   return (
     <View style={styles.container}>
       
-            <TouchableOpacity style={styles.botaoList} onPress={listar}>
-              <Text style={styles.text}>Listar salas</Text>
-            </TouchableOpacity> 
+
       
 <View style={[styles.row]}>
-  <View style={styles.column}>
-    <Text style={styles.tabelatext}>Nome</Text>
-  </View>
-  <View style={styles.column}>
-    <Text style={styles.tabelatext}>Número de patrimônio</Text>
-  </View>
-  <View style={styles.column}>
-    <Text style={styles.tabelatext}>Estado</Text>
-  </View>
+ 
+    <Text style={styles.tabelatext}>Lista de salas</Text>
+ 
+
 </View>
       <FlatList
         data={salas}
+        refreshing={load}
         renderItem={({ item }) => (
-    <View style={styles.row}>
-      <View style={styles.column}>
-        <Text>{item.nome}</Text>
-      </View>
-      <View style={styles.column}>
-        <Text>{item.Usuario}</Text>
-      </View>
-      <View style={styles.column}>
-        <Text>{item.Item}</Text>
-      </View>
-    </View>
+          <View style={styles.tabelatext}>
+            
+              <TouchableOpacity 
+              onPress={ () => editar(item)}
+              onLongPress={ () => excluir(item)}>
+                <Text>{item.nome}</Text>
+              </TouchableOpacity>
+            
+          
+          </View>
         )}
         
       />
       
     </View>
-  );
+  )
 }
