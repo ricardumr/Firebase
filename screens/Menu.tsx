@@ -17,7 +17,7 @@ export default function Menu(){
         <Drawer.Navigator initialRouteName="Página Inicial">
             <Drawer.Screen name='Página Inicial' component = {Home}/>
             <Drawer.Screen name='Cadastrar item' component = {Cadastro_item}/>
-            <Drawer.Screen name='Cadastrar sala' component = {Cadastro_sala}/>
+            <Drawer.Screen name='Cadastrar sala' component = {Cadastro_sala}/>            
             <Drawer.Screen name='Lista itens' component = {Listar_itens}/>
             <Drawer.Screen name='Lista salas' component = {Listar_salas}/>
             

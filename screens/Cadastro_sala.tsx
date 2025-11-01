@@ -49,10 +49,9 @@ export default function Cadastro_sala() {
           const idSala  = refSala.doc();
           novoSala.id = idSala.id
             idSala.set(novoSala.toFirestore())
-            .then(() =>{
-          alert("Sala adicionada com sucesso")
+          alert("Sala adicionado com sucesso")
           setFormSala({})
-          })
+          }
 
     return(
 <ImageBackground source={require('../assets/back.png')} resizeMode='stretch' style={styles.container}>
@@ -67,7 +66,8 @@ export default function Cadastro_sala() {
       })} 
       value={formSala.nome}
       />
-      <TextInput style={styles.input} label='Responsável' onChangeText={valor => setFormSala({
+
+              <TextInput style={styles.input} label='Responsável' onChangeText={valor => setFormSala({
         ...formSala,
         
         usuario:valor
