@@ -43,16 +43,14 @@ export default function Cadastro_item() {
               })
 
             }
-
-            
-
-          const idItem  = refItem.doc();
+            else{
+           const idItem  = refItem.doc();
           novoItem.id = idItem.id
             idItem.set(novoItem.toFirestore())
           alert("Item adicionado com sucesso")
           setFormItem({})
           }
-
+}
     return(
 <ImageBackground source={require('../assets/back.png')} resizeMode='stretch' style={styles.container}>
       <Text style={styles.titulo}>Cadastro de Item</Text>
@@ -90,6 +88,13 @@ export default function Cadastro_item() {
         observacao:valor
       })} 
       value={formItem.observacao}
+/>
+              <TextInput style={styles.input} label='sala' onChangeText={valor => setFormItem({
+        ...formItem,
+        
+        sala:valor
+      })} 
+      value={formItem.sala}
 />
 
 

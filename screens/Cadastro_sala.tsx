@@ -19,7 +19,7 @@ export default function Cadastro_sala() {
 
   const route = useRoute();
   
-  useEffect( () => {//recebe objeto item para editar
+  useEffect( () => {//recebe objeto sala para editar
     if(route.params){
       setFormSala (route.params.sala)
     }
@@ -43,14 +43,13 @@ export default function Cadastro_sala() {
               })
 
             }
-
-            
-
-          const idSala  = refSala.doc();
+            else{
+           const idSala  = refSala.doc();
           novoSala.id = idSala.id
             idSala.set(novoSala.toFirestore())
           alert("Sala adicionado com sucesso")
           setFormSala({})
+          }
           }
 
     return(
