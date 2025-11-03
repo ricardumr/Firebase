@@ -1,10 +1,11 @@
 export class Usuario{
 
-    public id:      string;
-    public nome:    string;
-    public email:   string;
-    public senha:   string;
-    public fone:    string;
+    public id:          string;
+    public nome:        string;
+    public email:       string;
+    public senha:       string;
+    public nascimento:  string;
+
 
     constructor(obj ?: Partial<Usuario>){
         if(obj){
@@ -12,7 +13,7 @@ export class Usuario{
             this.nome      =obj.nome
             this.email     =obj.email
             this.senha     =obj.senha
-            this.fone      =obj.fone
+            this.nascimento      =obj.nascimento
         }
     }
 
@@ -22,7 +23,7 @@ export class Usuario{
         "nome"      :       "${this.nome}",
         "email"     :       "${this.email}",
         "senha"     :       "${this.senha}",
-        "fone"      :       "${this.fone}",
+        "nascimento"      :       "${this.nascimento}",
       }`
       return objeto
     }
@@ -33,7 +34,7 @@ export class Usuario{
             nome        : this.nome,
             email       : this.email,
             senha       : this.senha,
-            fone        : this.fone
+            nascimento        : this.nascimento
         }
         return usuario
     }

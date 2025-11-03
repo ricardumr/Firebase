@@ -5,13 +5,13 @@ import { auth, firestore } from '../firebase';
 import { useNavigation } from '@react-navigation/native';
 import styles from '../estilo';
 import { TextInput } from 'react-native-paper';
-
+import DateTimePicker from 'react-native-modal-datetime-picker';
 import { Usuario } from '../model/Usuario';
 
 export default function Registro() {
   
-  const[formUsuario, setFormUsuario] = useState<Partial<Usuario>>({})
-
+  const [formUsuario, setFormUsuario] = useState<Partial<Usuario>>({})
+  const [DataPickerVisivel, setDataPickerVisivel] = useState(false)
   const navigation = useNavigation();
 
   const cadastrar = () =>{
@@ -28,11 +28,20 @@ export default function Registro() {
               nome    : formUsuario.nome,
               email   : formUsuario.email,
               senha   : formUsuario.senha,
-              fone    : formUsuario.fone,
+              nascimento    : formUsuario.nascimento
+              ? formUsuario.nascimento.toISOString()
+              : null,
 
-            })
-
+            });
     })
+    .catch((erro) => alert(erro.message));
+  }
+  const confirmarData = (data) => {
+    setFormUsuario({
+      ...formUsuario,
+      nascimento: data,
+    });
+    setDataPickerVisivel(false);
   }
 
   return (
@@ -49,14 +58,30 @@ export default function Registro() {
         ...formUsuario,
         email:valor
       })} />
+
+          <TouchableOpacity 
+    style={styles.inputPicker}
+    onPress={() => setDataPickerVisivel(true)}>
+      <Text style={styles.inputPicker}>
+        {formUsuario.nascimento
+        ?formUsuario.nascimento.toLocaleDateString()
+        :'Selecionar data de nascimento.'
+        }
+        </Text> 
+    </TouchableOpacity>
+
+    <DateTimePicker
+    isVisible={DataPickerVisivel}
+    mode="date"
+    onConfirm={confirmarData}
+    onCancel={() => setDataPickerVisivel(false)}
+    maximumDate={new Date()}
+/>
       <TextInput style={styles.input} secureTextEntry = {true} label='Senha' onChangeText={valor => setFormUsuario({
         ...formUsuario,
         senha:valor
       })} />
-      <TextInput style={styles.input} label='Fone' onChangeText={valor => setFormUsuario({
-        ...formUsuario,
-        fone:valor
-      })} />
+
 
     </View>
       <TouchableOpacity style={styles.botaoCad} onPress={cadastrar}>

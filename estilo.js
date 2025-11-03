@@ -161,5 +161,8 @@ tabelatext: {
     backgroundColor:"gray",
     
   },
+  date:{
+    
+  }
  
 })

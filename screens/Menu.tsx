@@ -7,6 +7,7 @@ import Cadastro_item from "./Cadastro_item"
 import Cadastro_sala from "./Cadastro_sala";
 import Listar_itens from "./Listar_itens";
 import Listar_salas from "./Listar_salas";
+import Listar_local from "./Listar_local";
 
 
 const Drawer = createDrawerNavigator();
@@ -20,7 +21,7 @@ export default function Menu(){
             <Drawer.Screen name='Cadastrar sala' component = {Cadastro_sala}/>            
             <Drawer.Screen name='Lista itens' component = {Listar_itens}/>
             <Drawer.Screen name='Lista salas' component = {Listar_salas}/>
-            
+            <Drawer.Screen name='Lista local' component = {Listar_local}/>            
         </Drawer.Navigator>    
     )
 }

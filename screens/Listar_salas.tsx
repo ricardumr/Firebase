@@ -26,14 +26,14 @@ export default function Listar_salas() {
 
   const refSala = firestore
     .collection("Usuario")
-    .doc(auth.currentUser?.uid)  
+    .doc(auth.currentUser?.uid)
     .collection("Sala");
-    
-    useEffect( () => {
-      if(load){
-        listar();
-      }
-    })
+
+  useEffect(() => {
+    if (load) {
+      listar();
+    }
+  })
 
   const listar = () => {
     const subscriber = refSala.onSnapshot((query) => {
@@ -51,50 +51,50 @@ export default function Listar_salas() {
     return () => subscriber();
   };
 
-  const excluir = async(sala) =>{
+  const excluir = async (sala) => {
     const resultado = await refSala
-    .doc(sala.id)
-    .delete()
-    .then( () => {
-      alert("Excluído com sucesso!")
-      listar()
-    })
-    
+      .doc(sala.id)
+      .delete()
+      .then(() => {
+        alert("Excluído com sucesso!")
+        listar()
+      })
+
   }
-    const editar = (item: Sala) =>{
-      navigation.navigate("Cadastrar item", {item : sala})//nome do parametro pra esquerda e oq ele vai receber na direita
-    
+  const editar = (item: Sala) => {
+    navigation.navigate("Cadastrar sala", { sala: item })//nome do parametro pra esquerda e oq ele vai receber na direita
+
   }
 
   return (
     <View style={styles.container}>
-      
 
-      
-<View style={[styles.row]}>
- 
-    <Text style={styles.tabelatext}>Lista de salas</Text>
- 
 
-</View>
+
+      <View style={[styles.row]}>
+
+        <Text style={styles.tabelatext}>Lista de salas</Text>
+
+
+      </View>
       <FlatList
         data={salas}
         refreshing={load}
         renderItem={({ item }) => (
           <View style={styles.tabelatext}>
-            
-              <TouchableOpacity 
-              onPress={ () => editar(item)}
-              onLongPress={ () => excluir(item)}>
-                <Text>{item.nome}</Text>
-              </TouchableOpacity>
-            
-          
+
+            <TouchableOpacity
+              onPress={() => editar(item)}
+              onLongPress={() => excluir(item)}>
+              <Text>{item.nome}</Text>
+            </TouchableOpacity>
+
+
           </View>
         )}
-        
+
       />
-      
+
     </View>
   )
 }
