@@ -9,21 +9,28 @@ export default StyleSheet.create({
       },
 
     titulo:{
-    fontSize:20,
+    fontSize:28,
+    fontWeight:"bold"
   },
   input:{
     color :"white",
     backgroundColor:"gray",
-    padding:2,
+    padding:1,
     height: 20,
     width: 300,
-    marginTop: 20,
+    marginTop: 15,
+    
     
 
   },
   inputcontainer:{
     height: 180,
-    marginBottom:"50%"
+    marginBottom:"5%",
+    marginTop:"5%",
+    backgroundColor:"white",
+    padding:20,
+    borderRadius:10,
+
   },
   form:{
     flex:1,
