@@ -54,7 +54,7 @@ export default function Listar_local() {
 
 
   return (
-    <View style={styles.container}>
+    <ImageBackground resizeMode="stretch" source={require('../assets/back.png')} style={styles.container}>
       
 
       
@@ -82,6 +82,6 @@ export default function Listar_local() {
         
       />
       
-    </View>
+    </ImageBackground>
   )
 }
