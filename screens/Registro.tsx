@@ -58,11 +58,11 @@ export default function Registro() {
         ...formUsuario,
         email:valor
       })} />
-
+<View style = {styles.inputPickersala}>
           <TouchableOpacity 
-    style={styles.inputPicker}
+    style={styles.inputPickerdata}
     onPress={() => setDataPickerVisivel(true)}>
-      <Text style={styles.inputPicker}>
+      <Text>
         {formUsuario.nascimento
         ?formUsuario.nascimento.toLocaleDateString()
         :'Selecionar data de nascimento.'
@@ -77,6 +77,7 @@ export default function Registro() {
     onCancel={() => setDataPickerVisivel(false)}
     maximumDate={new Date()}
 />
+</View>
       <TextInput style={styles.input} secureTextEntry = {true} label='Senha' onChangeText={valor => setFormUsuario({
         ...formUsuario,
         senha:valor

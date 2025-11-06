@@ -9,7 +9,7 @@ import { auth, firestore } from '../firebase';
 import { TextInput } from 'react-native-paper';
 import { Sala } from "../model/Sala";
 import { useEffect } from "react";
-
+import { Picker } from "@react-native-picker/picker";
 
 
 
@@ -66,17 +66,24 @@ export default function Cadastro_sala() {
         })}
           value={formSala.nome}
         />
+<View style={styles.inputPickersala}>
+    <Picker
+              mode='dialog'
+              //prompt='Selecione um tipo...'
+              onValueChange={valor => setFormSala({
+                ...formSala,
+                usuario : valor
+              })}
+              selectedValue={formSala.usuario}
+            >
+              <Picker.Item label="Selecione um responsavel..." value="0" />
+              <Picker.Item label="Lisandro" value="Lisandro" />
+              <Picker.Item label="Marcel"     value="Marcel" />
+              <Picker.Item label="Diego"  value="Diego" />
+              <Picker.Item label="Roger"  value="Roger" />
+            </Picker>
 
-        <TextInput style={styles.input} label='Responsável' onChangeText={valor => setFormSala({
-          ...formSala,
-
-          usuario: valor
-        })}
-          value={formSala.usuario}
-        />
-
-
-
+</View>
       </View>
       <TouchableOpacity style={styles.botaoCad} onPress={cadastrar}>
         <Text style={styles.text}>Cadastrar</Text>

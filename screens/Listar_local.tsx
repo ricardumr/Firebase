@@ -17,12 +17,15 @@ import { useState, useEffect } from "react";
 import { auth, firestore } from "../firebase";
 import { TextInput } from "react-native-paper";
 import { Item } from "../model/Item";
+import { Picker } from "@react-native-picker/picker";
 
 
 export default function Listar_local() {
   const navigation = useNavigation();
   const [itens, setItens] = useState<Item[]>([]);
   const [load, setLoad] = useState(true)
+  const[formItem, setFormItem] = useState<Partial<Item>>({})
+  const [tipoSelecionado, setTipoSelecionado] = useState('')
 
   const refItem = firestore
     .collection("Usuario")
@@ -36,15 +39,17 @@ export default function Listar_local() {
     })
 
   const listar = () => {
-    const subscriber = refItem.onSnapshot((query) => {
-      const itens = [];
-      query.forEach((documento) => {
-        itens.push({
-          ...documento.data(),
-          key: documento.id,
-        });
-      });
-      setItens(itens);
+                const subscriber = refItem
+        .where('sala', '==', tipoSelecionado)
+        .onSnapshot( (query) => { 
+            const itens = [];
+            query.forEach((documento) => {
+                itens.push({
+                    ...documento.data(),
+                    key: documento.id
+                });
+              })
+    setItens(itens);
       setLoad(false);
       console.log(itens)
     });
@@ -64,6 +69,23 @@ export default function Listar_local() {
  
 
 </View>
+      <View style={styles.inputView}>
+      <View style={styles.inputPicker}>
+  <Picker
+                    mode='dialog'
+                    onValueChange={valor => {
+                        setTipoSelecionado(valor)
+                        setLoad(true)
+                    }}
+                    >
+                        <Picker.Item label="Selecione uma sala..." value="0" />
+                        <Picker.Item label="301" value="301" />
+                        <Picker.Item label="302"     value="302" />
+                        <Picker.Item label="303"  value="303" />
+                        <Picker.Item label="304"  value="304" />
+                    </Picker>
+            </View>
+          </View>r
       <FlatList
         data={itens}
         refreshing={load}
@@ -78,6 +100,7 @@ export default function Listar_local() {
             
           
           </View>
+          
         )}
         
       />
