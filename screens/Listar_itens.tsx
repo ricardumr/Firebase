@@ -76,7 +76,7 @@ export default function Listar_itens() {
     <Text style={styles.tabelatext}>Lista de Itens</Text>
  
 
-</View>
+      </View>
       <FlatList
         data={itens}
         refreshing={load}
@@ -88,9 +88,7 @@ export default function Listar_itens() {
               onLongPress={ () => excluir(item)}>
                 <Text>{item.nome}</Text>
               </TouchableOpacity>
-            
-          
-          </View>
+      </View>
         )}
         
       />

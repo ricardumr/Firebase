@@ -13,20 +13,57 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { useNavigation } from "@react-navigation/native";
 import styles from "../estilo";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { auth, firestore } from "../firebase";
 import { TextInput } from "react-native-paper";
 import { Item } from "../model/Item";
-import { Sala } from "../model/Sala"
+import { Conferencia } from "../model/Conferencia";
 
 
 export default function Conferencia_inventario() {
+  const navigation = useNavigation();
   const [itens, setItens] = useState<Item[]>([]);
+  const [load, setLoad] = useState(true)
+  const [confs, setConfs] = useState<Conferencia[]>([]);
+  
+    const refConfs = firestore
+    .collection("Usuario")
+    .doc(auth.currentUser?.uid)  
+    .collection("Conferencia");
+    
+    useEffect( () => {
+      if(load){
+        listar();
+      }
+    })
+
+  const listarconfs = () => {
+    const subscriber = refConfs.onSnapshot((query) => {
+      const confs = [];
+      query.forEach((documento) => {
+        confs.push({
+          ...documento.data(),
+          key: documento.id,
+        });
+      });
+      setItens(itens);
+      setLoad(false);
+      console.log(itens)
+    });
+    return () => subscriber();
+  };
+
 
   const refItem = firestore
     .collection("Usuario")
     .doc(auth.currentUser?.uid)  
     .collection("Item");
+    
+    useEffect( () => {
+      if(load){
+        listar();
+      }
+    })
 
   const listar = () => {
     const subscriber = refItem.onSnapshot((query) => {
@@ -38,46 +75,35 @@ export default function Conferencia_inventario() {
         });
       });
       setItens(itens);
+      setLoad(false);
+      console.log(itens)
     });
     return () => subscriber();
   };
 
+
+
   return (
-    <View style={styles.container}>
+    <ImageBackground resizeMode="stretch" source={require('../assets/back.png')} style={styles.container}>
       
-            <TouchableOpacity style={styles.botaoList} onPress={listar}>
-              <Text style={styles.text}>Listar itens</Text>
-            </TouchableOpacity> 
+
       
 <View style={[styles.row]}>
-  <View style={styles.column}>
-    <Text style={styles.tabelatext}>Nome</Text>
+ 
+    <Text style={styles.tabelatext}>Conferencia de estoque</Text>
+ 
+
   </View>
-  <View style={styles.column}>
-    <Text style={styles.tabelatext}>Número de patrimônio</Text>
-  </View>
-  <View style={styles.column}>
-    <Text style={styles.tabelatext}>Estado</Text>
-  </View>
-</View>
       <FlatList
         data={itens}
+        refreshing={load}
         renderItem={({ item }) => (
-    <View style={styles.row}>
-      <View style={styles.column}>
-        <Text>{item.nome}</Text>
-      </View>
-      <View style={styles.column}>
-        <Text>{item.patrimonio}</Text>
-      </View>
-      <View style={styles.column}>
-        <Text>{item.estado}</Text>
-      </View>
-    </View>
+          <View style={styles.tabelatext}>  
+  </View>
         )}
         
       />
       
-    </View>
-  );
+    </ImageBackground>
+  )
 }

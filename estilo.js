@@ -22,9 +22,13 @@ export default StyleSheet.create({
   },
   inputcontainer: {
     height: 180,
-    marginBottom: "45%",
+    marginBottom: "15%",
     marginTop: "5%",
     borderRadius: 10,
+    backgroundColor:"white",
+    padding:15,
+    height:380,
+    borderRadius:12
   },
   form: {
     flex: 1,
