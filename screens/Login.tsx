@@ -30,7 +30,7 @@ export default function Login() {
       <KeyboardAvoidingView behavior='padding' style={styles.container}>
       <Text style={styles.titulo}>Tela de login</Text>
       
-      <View style={styles.inputcontainer}>
+      <View style={styles.inputcontainerlog}>
         <TextInput 
         style={styles.input}
         label='Email'

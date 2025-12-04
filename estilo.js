@@ -30,6 +30,16 @@ export default StyleSheet.create({
     height:380,
     borderRadius:12
   },
+    inputcontainerlog: {
+    height: 180,
+    marginBottom: "15%",
+    marginTop: "5%",
+    borderRadius: 10,
+    backgroundColor:"white",
+    padding:15,
+    height:180,
+    borderRadius:12
+  },
   form: {
     flex: 1,
     backgroundColor: "#ffffff",
