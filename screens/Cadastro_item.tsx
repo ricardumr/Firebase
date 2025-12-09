@@ -9,6 +9,8 @@ import { auth, firestore } from '../firebase';
 import { TextInput } from 'react-native-paper';
 import { Item } from "../model/Item";
 import { useEffect } from "react";
+import { Picker } from "@react-native-picker/picker";
+import { Sala } from "../model/Sala";
 
 
 
@@ -16,6 +18,7 @@ import { useEffect } from "react";
 export default function Cadastro_item() {
   
   const[formItem, setFormItem] = useState<Partial<Item>>({})
+  const[salas, setSalas] = useState<Sala[]>([])
 
   const route = useRoute();
   
@@ -24,6 +27,20 @@ export default function Cadastro_item() {
       setFormItem (route.params.item)
     }
   },[route.params])//depois usar isso no picker no sala: selectedValue={formSala.usuario}
+
+  useEffect(() => {//carrega as salas cadastradas
+    const refSala = firestore.collection("Usuario")
+      .doc(auth.currentUser?.uid)
+      .collection("Sala")
+
+    refSala.onSnapshot((querySnapshot) => {
+      const salasArray: Sala[] = []
+      querySnapshot.forEach((doc) => {
+        salasArray.push(new Sala(doc.data() as Partial<Sala>))
+      })
+      setSalas(salasArray)
+    })
+  }, [])
 
   const navigation = useNavigation();
 
@@ -89,13 +106,21 @@ export default function Cadastro_item() {
       })} 
       value={formItem.observacao}
 />
-              <TextInput style={styles.input} label='sala' onChangeText={valor => setFormItem({
-        ...formItem,
-        
-        sala:valor
-      })} 
-      value={formItem.sala}
-/>
+              <View style={styles.inputPickersala}>
+                <Picker
+                  mode='dialog'
+                  onValueChange={valor => setFormItem({
+                    ...formItem,
+                    sala: valor
+                  })}
+                  selectedValue={formItem.sala}
+                >
+                  <Picker.Item label="Selecione uma sala..." value="" />
+                  {salas.map((sala) => (
+                    <Picker.Item key={sala.id} label={sala.nome} value={sala.nome} />
+                  ))}
+                </Picker>
+              </View>
 
 
 

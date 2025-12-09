@@ -16,6 +16,7 @@ import { Picker } from "@react-native-picker/picker";
 export default function Cadastro_sala() {
 
   const [formSala, setFormSala] = useState<Partial<Sala>>({})
+  const [salas, setSalas] = useState<Sala[]>([])
 
   const route = useRoute();
 
@@ -25,6 +26,20 @@ export default function Cadastro_sala() {
     }
   }, [route.params])//depois usar isso no picker no sala: selectedValue={formSala.usuario}
 
+  useEffect(() => {//carrega as salas cadastradas para validação
+    const refSala = firestore.collection("Usuario")
+      .doc(auth.currentUser?.uid)
+      .collection("Sala")
+
+    refSala.onSnapshot((querySnapshot) => {
+      const salasArray: Sala[] = []
+      querySnapshot.forEach((doc) => {
+        salasArray.push(new Sala(doc.data() as Partial<Sala>))
+      })
+      setSalas(salasArray)
+    })
+  }, [])
+
   const navigation = useNavigation();
   
 
@@ -33,6 +48,21 @@ export default function Cadastro_sala() {
     const refSala = firestore.collection("Usuario")
       .doc(auth.currentUser?.uid)
       .collection("Sala")
+
+    // Validação de nome vazio
+    if (!formSala.nome || formSala.nome.trim() === '') {
+      alert('Por favor, insira um nome para a sala');
+      return;
+    }
+
+    // Validação de duplicação de nome (apenas para novas salas)
+    if (!formSala.id) {
+      const nomeDuplicado = salas.some(sala => sala.nome.toLowerCase() === formSala.nome.toLowerCase());
+      if (nomeDuplicado) {
+        alert('Já existe uma sala com este nome. Por favor, escolha outro nome.');
+        return;
+      }
+    }
 
     const novoSala = new Sala(formSala)
     if (formSala.id) {
