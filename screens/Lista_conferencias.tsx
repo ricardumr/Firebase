@@ -85,9 +85,12 @@ export default function Lista_conferencias() {
   const renderConferencia = ({ item }: { item: any }) => {
     const isExpanded = expandedId === item.key;
     const totalItens = item.itens?.length || 0;
-    const corretos = item.itens?.filter((i: any) => i.status === "correct").length || 0;
-    const errados = item.itens?.filter((i: any) => i.status === "wrong").length || 0;
-    const naoEncontrados = item.itens?.filter((i: any) => i.status === "not_found").length || 0;
+    const corretos =
+      item.itens?.filter((i: any) => i.status === "correct").length || 0;
+    const errados =
+      item.itens?.filter((i: any) => i.status === "wrong").length || 0;
+    const naoEncontrados =
+      item.itens?.filter((i: any) => i.status === "not_found").length || 0;
 
     return (
       <TouchableOpacity
@@ -96,7 +99,13 @@ export default function Lista_conferencias() {
       >
         <View style={[styles.card, { marginHorizontal: 16, marginBottom: 12 }]}>
           {/* Header da Conferência */}
-          <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
             <View style={{ flex: 1 }}>
               <Text style={[styles.title, { fontSize: 16, marginBottom: 4 }]}>
                 Conferência #{item.id?.split("_")[1] || "N/A"}
@@ -105,25 +114,51 @@ export default function Lista_conferencias() {
                 {formatarData(item.data)}
               </Text>
               <View style={{ flexDirection: "row", gap: 12 }}>
-                <View style={{ flexDirection: "row", alignItems: "center", gap: 4 }}>
+                <View
+                  style={{ flexDirection: "row", alignItems: "center", gap: 4 }}
+                >
                   <Text style={{ fontSize: 16, color: "#10b981" }}>✓</Text>
-                  <Text style={{ fontSize: 12, color: "#10b981", fontWeight: "bold" }}>
+                  <Text
+                    style={{
+                      fontSize: 12,
+                      color: "#10b981",
+                      fontWeight: "bold",
+                    }}
+                  >
                     {corretos}
                   </Text>
                 </View>
-                <View style={{ flexDirection: "row", alignItems: "center", gap: 4 }}>
+                <View
+                  style={{ flexDirection: "row", alignItems: "center", gap: 4 }}
+                >
                   <Text style={{ fontSize: 16, color: "#f59e0b" }}>✓</Text>
-                  <Text style={{ fontSize: 12, color: "#f59e0b", fontWeight: "bold" }}>
+                  <Text
+                    style={{
+                      fontSize: 12,
+                      color: "#f59e0b",
+                      fontWeight: "bold",
+                    }}
+                  >
                     {errados}
                   </Text>
                 </View>
-                <View style={{ flexDirection: "row", alignItems: "center", gap: 4 }}>
+                <View
+                  style={{ flexDirection: "row", alignItems: "center", gap: 4 }}
+                >
                   <Text style={{ fontSize: 16, color: "#ef4444" }}>✓</Text>
-                  <Text style={{ fontSize: 12, color: "#ef4444", fontWeight: "bold" }}>
+                  <Text
+                    style={{
+                      fontSize: 12,
+                      color: "#ef4444",
+                      fontWeight: "bold",
+                    }}
+                  >
                     {naoEncontrados}
                   </Text>
                 </View>
-                <Text style={{ fontSize: 12, color: "#6b7280", marginLeft: "auto" }}>
+                <Text
+                  style={{ fontSize: 12, color: "#6b7280", marginLeft: "auto" }}
+                >
                   Total: {totalItens}
                 </Text>
               </View>
@@ -135,8 +170,22 @@ export default function Lista_conferencias() {
 
           {/* Detalhes Expandidos */}
           {isExpanded && (
-            <View style={{ marginTop: 12, borderTopWidth: 1, borderTopColor: "#e5e7eb", paddingTop: 12 }}>
-              <Text style={{ fontSize: 14, fontWeight: "bold", marginBottom: 8, color: "#3B82F6" }}>
+            <View
+              style={{
+                marginTop: 12,
+                borderTopWidth: 1,
+                borderTopColor: "#e5e7eb",
+                paddingTop: 12,
+              }}
+            >
+              <Text
+                style={{
+                  fontSize: 14,
+                  fontWeight: "bold",
+                  marginBottom: 8,
+                  color: "#3B82F6",
+                }}
+              >
                 Itens Conferenciados:
               </Text>
               {item.itens && item.itens.length > 0 ? (
@@ -165,10 +214,13 @@ export default function Lista_conferencias() {
                           {itemConf.itemNome}
                         </Text>
                         <Text style={{ fontSize: 12, color: "#6b7280" }}>
-                          Sala: {itemConf.sala} | Patrimônio: {itemConf.patrimonio}
+                          Sala: {itemConf.sala} | Patrimônio:{" "}
+                          {itemConf.patrimonio}
                         </Text>
                       </View>
-                      <View style={{ justifyContent: "center", paddingLeft: 8 }}>
+                      <View
+                        style={{ justifyContent: "center", paddingLeft: 8 }}
+                      >
                         <Text
                           style={{
                             fontSize: 18,
@@ -177,7 +229,7 @@ export default function Lista_conferencias() {
                                 ? "#10b981"
                                 : itemConf.status === "wrong"
                                 ? "#f59e0b"
-                                : "#ef4444"
+                                : "#ef4444",
                           }}
                         >
                           ✓
@@ -187,7 +239,9 @@ export default function Lista_conferencias() {
                   ))}
                 </ScrollView>
               ) : (
-                <Text style={{ fontSize: 12, color: "#9ca3af" }}>Nenhum item conferenciado</Text>
+                <Text style={{ fontSize: 12, color: "#9ca3af" }}>
+                  Nenhum item conferenciado
+                </Text>
               )}
             </View>
           )}
@@ -206,7 +260,9 @@ export default function Lista_conferencias() {
       <DrawerTab />
 
       {conferencias.length === 0 && !loading ? (
-        <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <View
+          style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+        >
           <Text style={{ fontSize: 48 }}>📄</Text>
           <Text style={{ fontSize: 16, color: "#9ca3af", marginTop: 16 }}>
             Nenhuma conferência registrada

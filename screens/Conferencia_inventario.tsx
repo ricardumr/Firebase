@@ -11,7 +11,11 @@ import { useNavigation } from "@react-navigation/native";
 import styles from "../estilo";
 import { useState, useEffect } from "react";
 import { auth, firestore } from "../firebase";
-import { Checkbox, Button as PaperButton, IconButton } from "react-native-paper";
+import {
+  Checkbox,
+  Button as PaperButton,
+  IconButton,
+} from "react-native-paper";
 import { Item } from "../model/Item";
 import { Conferencia } from "../model/Conferencia";
 
@@ -96,12 +100,16 @@ export default function Conferencia_inventario() {
         .doc(conferencia.id)
         .set(conferencia);
 
-      Alert.alert("Sucesso!", "Conferência finalizada e armazenada com sucesso", [
-        {
-          text: "OK",
-          onPress: () => navigation.goBack(),
-        },
-      ]);
+      Alert.alert(
+        "Sucesso!",
+        "Conferência finalizada e armazenada com sucesso",
+        [
+          {
+            text: "OK",
+            onPress: () => navigation.goBack(),
+          },
+        ]
+      );
     } catch (error) {
       console.error("Erro ao finalizar conferência:", error);
       Alert.alert("Erro", "Não foi possível salvar a conferência");
@@ -151,31 +159,46 @@ export default function Conferencia_inventario() {
           <Text>{item.patrimonio}</Text>
         </View>
         <View style={styles.checkboxCell}>
-          <TouchableOpacity 
+          <TouchableOpacity
             onPress={() => setStatus(key, "correct")}
             style={{ flexDirection: "row", alignItems: "center" }}
           >
-            <Text style={{ fontSize: 20, color: status === "correct" ? "#10b981" : "#d1d5db" }}>
+            <Text
+              style={{
+                fontSize: 20,
+                color: status === "correct" ? "#10b981" : "#d1d5db",
+              }}
+            >
               {status === "correct" ? "✓" : "○"}
             </Text>
           </TouchableOpacity>
         </View>
         <View style={styles.checkboxCell}>
-          <TouchableOpacity 
+          <TouchableOpacity
             onPress={() => setStatus(key, "wrong")}
             style={{ flexDirection: "row", alignItems: "center" }}
           >
-            <Text style={{ fontSize: 20, color: status === "wrong" ? "#f59e0b" : "#d1d5db" }}>
+            <Text
+              style={{
+                fontSize: 20,
+                color: status === "wrong" ? "#f59e0b" : "#d1d5db",
+              }}
+            >
               {status === "wrong" ? "✓" : "○"}
             </Text>
           </TouchableOpacity>
         </View>
         <View style={styles.checkboxCell}>
-          <TouchableOpacity 
+          <TouchableOpacity
             onPress={() => setStatus(key, "not_found")}
             style={{ flexDirection: "row", alignItems: "center" }}
           >
-            <Text style={{ fontSize: 20, color: status === "not_found" ? "#ef4444" : "#d1d5db" }}>
+            <Text
+              style={{
+                fontSize: 20,
+                color: status === "not_found" ? "#ef4444" : "#d1d5db",
+              }}
+            >
               {status === "not_found" ? "✓" : "○"}
             </Text>
           </TouchableOpacity>

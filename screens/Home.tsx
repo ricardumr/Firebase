@@ -32,7 +32,11 @@ export default function Home() {
     { label: "Cadastrar Sala", screen: "Cadastrar sala", icon: "🔨" },
     { label: "Itens por Sala", screen: "Lista local", icon: "🔍" },
     { label: "Conferência", screen: "Conferencia de inventário", icon: "✅" },
-    { label: "Histórico de Conferências", screen: "Lista de conferências", icon: "📊" },
+    {
+      label: "Histórico de Conferências",
+      screen: "Lista de conferências",
+      icon: "📊",
+    },
   ];
 
   return (
