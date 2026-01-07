@@ -16,13 +16,13 @@ import styles from "../estilo";
 import { useState, useEffect } from "react";
 import { auth, firestore } from "../firebase";
 import { TextInput } from "react-native-paper";
+import Header from "../components/Header";
 import { Sala } from "../model/Sala";
-
 
 export default function Listar_salas() {
   const navigation = useNavigation();
   const [salas, setSalas] = useState<Sala[]>([]);
-  const [load, setLoad] = useState(true)
+  const [load, setLoad] = useState(true);
 
   const refSala = firestore
     .collection("Usuario")
@@ -33,7 +33,7 @@ export default function Listar_salas() {
     if (load) {
       listar();
     }
-  })
+  });
 
   const listar = () => {
     const subscriber = refSala.onSnapshot((query) => {
@@ -46,7 +46,7 @@ export default function Listar_salas() {
       });
       setSalas(salas);
       setLoad(false);
-      console.log(salas)
+      console.log(salas);
     });
     return () => subscriber();
   };
@@ -56,45 +56,45 @@ export default function Listar_salas() {
       .doc(sala.id)
       .delete()
       .then(() => {
-        alert("Excluído com sucesso!")
-        listar()
-      })
-
-  }
+        alert("Excluído com sucesso!");
+        listar();
+      });
+  };
   const editar = (item: Sala) => {
-    navigation.navigate("Cadastrar sala", { sala: item })//nome do parametro pra esquerda e oq ele vai receber na direita
-
-  }
+    navigation.navigate("Cadastrar sala", { sala: item }); //nome do parametro pra esquerda e oq ele vai receber na direita
+  };
 
   return (
-    <ImageBackground resizeMode="stretch" source={require('../assets/back.png')} style={styles.container}>
-
-
-
-      <View style={[styles.row]}>
-
-        <Text style={styles.tabelatext}>Lista de salas</Text>
-
-
-      </View>
+    <ImageBackground
+      resizeMode="stretch"
+      source={require("../assets/back.png")}
+      style={styles.container}
+    >
+      <View style={{ marginTop: 120, flex: 1, width: "100%", alignItems: "center" }}></View>
+      <Header title="Lista de Salas" />
       <FlatList
-        data={salas}
+        data={salas ?? []}
+        keyExtractor={(item, index) => item.key ?? item.id ?? String(index)}
         refreshing={load}
+        contentContainerStyle={styles.listContainer}
+        ListEmptyComponent={
+          <Text style={{ color: "#fff", marginTop: 20 }}>
+            Nenhuma sala cadastrada
+          </Text>
+        }
         renderItem={({ item }) => (
-          <View style={styles.tabelatext}>
-
-            <TouchableOpacity
-              onPress={() => editar(item)}
-              onLongPress={() => excluir(item)}>
-              <Text>{item.nome}</Text>
-            </TouchableOpacity>
-
-
-          </View>
+          <TouchableOpacity
+            style={styles.listCard}
+            onPress={() => editar(item)}
+            onLongPress={() => excluir(item)}
+          >
+            <Text style={styles.listCardText}>{item.nome}</Text>
+            <Text style={styles.listCardSubtext}>
+              Responsável: {item.usuario}
+            </Text>
+          </TouchableOpacity>
         )}
-
       />
-
     </ImageBackground>
-  )
+  );
 }

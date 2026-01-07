@@ -1,41 +1,39 @@
 export class Conferencia{
-
-    public id:               boolean;
-    public simsalacrt:       boolean;
-    public simsalaerrd:      boolean;
-    public nao:              boolean;
+    public id:              string;
+    public data:            Date;
+    public itens:           Array<{
+        itemId: string;
+        itemNome: string;
+        sala: string;
+        patrimonio: string;
+        status: 'correct' | 'wrong' | 'not_found';
+    }>;
     
     constructor(obj ?: Partial<Conferencia>){
         if(obj){
-            this.id         =obj.id
-            this.simsalacrt       =obj.simsalacrt
-            this.simsalaerrd     =obj.simsalaerrd
-            this.nao =obj.nao
-    
+            this.id = obj.id;
+            this.data = obj.data || new Date();
+            this.itens = obj.itens || [];
         }
     }
 
-    toString () {
+    toString() {
         const objeto = `{
-        "id"                 :       "${this.id}",
-        "simsalacrt"         :       "${this.simsalacrt}",
-        "simsalaerrd"        :       "${this.simsalaerrd}",
-        "nao"                :       "${this.nao}",
-    
-      }`
-      return objeto
+        "id"            :       "${this.id}",
+        "data"          :       "${this.data}",
+        "itens"         :       ${JSON.stringify(this.itens)}
+      }`;
+      return objeto;
     }
 
     toFirestore(){
-        const conferencia = {
-            id          : this.id,
-            simsalacrt        : this.simsalacrt,
-            simsalaerrd      : this.simsalaerrd,
-            nao  : this.nao,
-        }
-        return conferencia
+        return {
+            id: this.id,
+            data: this.data,
+            itens: this.itens,
+            timestamp: new Date()
+        };
     }
-
 }
 
  
