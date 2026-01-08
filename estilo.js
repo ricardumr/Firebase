@@ -381,6 +381,7 @@ export default StyleSheet.create({
     borderRadius: 12,
     padding: 12,
     elevation: 2,
+    marginBottom: 12,
   },
   tabela: {
     justifyContent: "center",

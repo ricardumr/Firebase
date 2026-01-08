@@ -18,14 +18,17 @@ import {
 } from "react-native-paper";
 import { Item } from "../model/Item";
 import { Conferencia } from "../model/Conferencia";
+import { useRoute } from "@react-navigation/native";
 
 export default function Conferencia_inventario() {
   const navigation = useNavigation();
+  const route: any = useRoute();
   const [itens, setItens] = useState<Item[]>([]);
   const [loading, setLoading] = useState(true);
   const [statuses, setStatuses] = useState<{ [key: string]: string | null }>(
     {}
   );
+  const [editingConference, setEditingConference] = useState<any>(null);
 
   const refItem = firestore
     .collection("Usuario")
@@ -46,6 +49,39 @@ export default function Conferencia_inventario() {
     });
     return () => subscriber();
   }, []);
+
+  // If navigated here to edit an existing conference, store it
+  useEffect(() => {
+    const conf = route?.params?.conferencia;
+    if (conf) {
+      setEditingConference(conf);
+    }
+  }, [route?.params]);
+
+  // When items are loaded and we have an editing conference, map its statuses
+  useEffect(() => {
+    if (!editingConference) return;
+    if (!itens || itens.length === 0) return;
+
+    const mapStatuses: { [key: string]: string | null } = {};
+    // editingConference.itens contains itemId (original key) and status
+    editingConference.itens.forEach((ic: any) => {
+      // find local item matching itemId
+      const local = itens.find((it) => (it.key || it.id) === ic.itemId);
+      if (local) {
+        const key = local.key || local.id || JSON.stringify(local);
+        mapStatuses[key] = ic.status || null;
+      }
+    });
+
+    // initialize any other items as null
+    itens.forEach((it) => {
+      const key = it.key || it.id || JSON.stringify(it);
+      if (mapStatuses[key] === undefined) mapStatuses[key] = null;
+    });
+
+    setStatuses(mapStatuses);
+  }, [editingConference, itens]);
 
   function setStatus(itemKey: string, value: string) {
     setStatuses((prev) => ({
@@ -84,32 +120,49 @@ export default function Conferencia_inventario() {
         };
       });
 
-      // Criar objeto de conferência
-      const conferencia = {
-        id: `conferencia_${Date.now()}`,
-        data: new Date(),
-        itens: itensConfirmados,
-        timestamp: new Date(),
-      };
+      // If editing existing conference, update it; otherwise create new
+      if (editingConference && editingConference.key) {
+        await firestore
+          .collection("Usuario")
+          .doc(uid)
+          .collection("Conferencia")
+          .doc(editingConference.key)
+          .update({ itens: itensConfirmados, timestamp: new Date() });
 
-      // Salvar no Firestore
-      await firestore
-        .collection("Usuario")
-        .doc(uid)
-        .collection("Conferencia")
-        .doc(conferencia.id)
-        .set(conferencia);
-
-      Alert.alert(
-        "Sucesso!",
-        "Conferência finalizada e armazenada com sucesso",
-        [
+        Alert.alert("Sucesso!", "Conferência atualizada com sucesso", [
           {
             text: "OK",
             onPress: () => navigation.goBack(),
           },
-        ]
-      );
+        ]);
+      } else {
+        // Criar objeto de conferência
+        const conferencia = {
+          id: `conferencia_${Date.now()}`,
+          data: new Date(),
+          itens: itensConfirmados,
+          timestamp: new Date(),
+        };
+
+        // Salvar no Firestore
+        await firestore
+          .collection("Usuario")
+          .doc(uid)
+          .collection("Conferencia")
+          .doc(conferencia.id)
+          .set(conferencia);
+
+        Alert.alert(
+          "Sucesso!",
+          "Conferência finalizada e armazenada com sucesso",
+          [
+            {
+              text: "OK",
+              onPress: () => navigation.goBack(),
+            },
+          ]
+        );
+      }
     } catch (error) {
       console.error("Erro ao finalizar conferência:", error);
       Alert.alert("Erro", "Não foi possível salvar a conferência");

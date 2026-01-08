@@ -10,7 +10,7 @@ import Listar_salas from "./Listar_salas";
 import Listar_local from "./Listar_local";
 import { Conferencia } from "../model/Conferencia";
 import Conferencia_inventario from "./Conferencia_inventario";
-import Lista_conferencias from "./Lista_conferencias";
+import Lista_conferencias from "./Listar_conferencias";
 import CustomDrawer from "../components/CustomDrawer";
 
 const Drawer = createDrawerNavigator();
