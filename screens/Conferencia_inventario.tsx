@@ -18,7 +18,9 @@ import {
 } from "react-native-paper";
 import { TextInput } from "react-native-paper";
 import { Item } from "../model/Item";
-import { Conferencia } from "../model/Conferencia";
+import { Sala } from "../model/Sala";
+
+
 import { useRoute } from "@react-navigation/native";
 
 export default function Conferencia_inventario() {

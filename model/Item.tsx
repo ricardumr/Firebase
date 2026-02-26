@@ -1,4 +1,6 @@
+import { Sala } from "./Sala";
 export class Item{
+
 
     public id:              string;
     public nome:            string;
@@ -14,7 +16,7 @@ export class Item{
             this.estado     =obj.estado
             this.patrimonio =obj.patrimonio
             this.observacao =obj.observacao
-            this.sala    =obj.sala
+            this.sala       =obj.sala
         }
     }
 
