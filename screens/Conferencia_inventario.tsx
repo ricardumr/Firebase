@@ -16,6 +16,7 @@ import {
   Button as PaperButton,
   IconButton,
 } from "react-native-paper";
+import { TextInput } from "react-native-paper";
 import { Item } from "../model/Item";
 import { Conferencia } from "../model/Conferencia";
 import { useRoute } from "@react-navigation/native";
@@ -26,8 +27,8 @@ export default function Conferencia_inventario() {
   const [itens, setItens] = useState<Item[]>([]);
   const [loading, setLoading] = useState(true);
 
-  const [Filtro, setFiltro] = useState("");
-  const [tipoSelecionado, setTipoSelecionado] = useState("");
+  const [filterName, setFilterName] = useState("");
+  const [filterPatrimonio, setFilterPatrimonio] = useState("");
   const [filtradas, setFiltradas] = useState<any[]>([]);
 
   const [statuses, setStatuses] = useState<{ [key: string]: string | null }>(
@@ -65,30 +66,30 @@ export default function Conferencia_inventario() {
   }, [route?.params]);
 
 
-// useEffect(() => {
-//     const uid = auth.currentUser?.uid;
-//     if (!uid) return;
+useEffect(() => {
+    const uid = auth.currentUser?.uid;
+    if (!uid) return;
 
-//     const subscriber = firestore
-//       .collection("Usuario")
-//       .doc(uid)
-//       .collection("Item")
-//       .orderBy("timestamp", "desc")
-//       .onSnapshot((query) => {
-//         const ItensLista: any[] = [];
-//         query.forEach((documento) => {
-//           ItensLista.push({
-//             ...documento.data(),
-//             key: documento.id,
-//           });
-//         });
-//         setItens(ItensLista);
-//         setFiltradas(ItensLista);
-//         setLoading(false);
-//       });
+    const subscriber = firestore
+      .collection("Usuario")
+      .doc(uid)
+      .collection("Item")
+      .orderBy("timestamp", "desc")
+      .onSnapshot((query) => {
+        const ItensLista: any[] = [];
+        query.forEach((documento) => {
+          ItensLista.push({
+            ...documento.data(),
+            key: documento.id,
+          });
+        });
+        setItens(ItensLista);
+        setFiltradas(ItensLista);
+        setLoading(false);
+      });
 
-//     return () => subscriber();
-//   }, []);
+    return () => subscriber();
+  }, []);
 
 
 
@@ -128,7 +129,7 @@ export default function Conferencia_inventario() {
   const allItemsChecked = (): boolean => {
     if (itens.length === 0) return false;
     return itens.every((item) => {
-      const key = item.key || item.id || JSONconst [dataFiltro, setDataFiltro] = useState("");.stringify(item);
+      const key = item.key || item.id || JSON.stringify(item);
       return statuses[key] !== null && statuses[key] !== undefined;
     });
   };
@@ -153,18 +154,6 @@ export default function Conferencia_inventario() {
           status: statuses[key],
         };
       });
-      const filtrarData = (texto: string) => {
-    setFiltro(texto);
-    if (!texto) {
-      setFiltradas(itens);
-    } else {
-      const filtered = itens.filter((conf) => {
-        return dataConf.includes(texto);
-      });
-      setFiltradas(filtered);
-    }
-  };
-
 
       // If editing existing conference, update it; otherwise create new
       if (editingConference && editingConference.key) {
@@ -199,26 +188,14 @@ export default function Conferencia_inventario() {
           .set(conferencia);
 
         Alert.alert(
-          "Sucesso!",const filtrarPorData = (texto: string) => {
-    setDataFiltro(texto);
-    if (!texto) {
-      setFiltradas(conferencias);
-    } else {
-      const filtered = conferencias.filter((conf) => {
-        const dataConf = formatarData(conf.data);
-        return dataConf.includes(texto);
-      });
-      setFiltradas(filtered);
-    }
-  };
-
+          "Sucesso!",
           "Conferência finalizada e armazenada com sucesso",
           [
             {
               text: "OK",
               onPress: () => navigation.goBack(),
             },
-          ]filtrarPorData
+          ]
         );
       }
     } catch (error) {
@@ -226,6 +203,27 @@ export default function Conferencia_inventario() {
       Alert.alert("Erro", "Não foi possível salvar a conferência");
     }
   };
+
+  // Filtrar itens quando os filtros mudam
+  useEffect(() => {
+    if (!filterName && !filterPatrimonio) {
+      setFiltradas(itens);
+      return;
+    }
+
+    const name = filterName.toLowerCase();
+    const patr = filterPatrimonio.toLowerCase();
+
+    const filtered = itens.filter((it) => {
+      const nome = (it.nome || "").toLowerCase();
+      const patrimonio = (it.patrimonio || "").toLowerCase();
+      const matchName = name ? nome.includes(name) : true;
+      const matchPatr = patr ? patrimonio.includes(patr) : true;
+      return matchName && matchPatr;
+    });
+
+    setFiltradas(filtered);
+  }, [itens, filterName, filterPatrimonio]);
 
   const renderHeader = () => (
     <View style={{ marginTop: 120 }}>
@@ -240,6 +238,30 @@ export default function Conferencia_inventario() {
             activeOutlineColor="#3B82F6"
             style={{ backgroundColor: "#fff" }}
           /> */}
+        <View style={{ flexDirection: "row", width: "100%", marginBottom: 8 }}>
+          <TextInput
+            mode="outlined"
+            placeholder="Filtrar por nome do item..."
+            value={filterName}
+            onChangeText={setFilterName}
+            outlineColor="#e2e8f0"
+            activeOutlineColor="#3B82F6"
+            style={{ backgroundColor: "#fff", flex: 1, height: 44 }}
+            contentStyle={{ height: 44 }}
+          />
+          </View>
+        <View style={{ flexDirection: "row", width: "100%", marginBottom: 8 }}>
+          <TextInput
+            mode="outlined"
+            placeholder="Filtrar por patrimônio"
+            value={filterPatrimonio}
+            onChangeText={setFilterPatrimonio}
+            outlineColor="#e2e8f0"
+            activeOutlineColor="#3B82F6"
+            style={{ backgroundColor: "#fff", flex: 1, marginLeft: 8, height: 44 }}
+            contentStyle={{ height: 44 }}
+          />
+        </View>
         <View style={styles.tableHeader}>
           <View style={[styles.cell, { flex: 2 }]}>
             <Text style={styles.headerText}>Item</Text>
@@ -335,8 +357,8 @@ export default function Conferencia_inventario() {
     >
       {renderHeader()}
       <FlatList
-        data={itens}
-        keyExtractor={(item) => item.key}
+        data={filtradas}
+        keyExtractor={(item) => item.key || item.id || JSON.stringify(item)}
         refreshing={loading}
         renderItem={renderItem}
         contentContainerStyle={{

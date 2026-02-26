@@ -22,7 +22,7 @@ export default function Listar_conferencias() {
   const [conferencias, setConferencias] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [dataFiltro, setDataFiltro] = useState("");
-  const [filtradas, setFiltradas] = useState<any[]>([]);
+  const [filtradas, setFiltradas ] = useState<any[]>([]);
   const [modalVisible, setModalVisible] = useState(false);
   const [conferenciaSelecionada, setConferenciaSelecionada] =
     useState<any>(null);
@@ -36,7 +36,7 @@ export default function Listar_conferencias() {
       .doc(uid)
       .collection("Conferencia")
       .orderBy("timestamp", "desc")
-      .onSnapshot((query) => {Data
+      .onSnapshot((query) => {
         const conferenciasLista: any[] = [];
         query.forEach((documento) => {
           conferenciasLista.push({
