@@ -25,6 +25,11 @@ export default function Conferencia_inventario() {
   const route: any = useRoute();
   const [itens, setItens] = useState<Item[]>([]);
   const [loading, setLoading] = useState(true);
+
+  const [Filtro, setFiltro] = useState("");
+  const [tipoSelecionado, setTipoSelecionado] = useState("");
+  const [filtradas, setFiltradas] = useState<any[]>([]);
+
   const [statuses, setStatuses] = useState<{ [key: string]: string | null }>(
     {}
   );
@@ -34,6 +39,7 @@ export default function Conferencia_inventario() {
     .collection("Usuario")
     .doc(auth.currentUser?.uid)
     .collection("Item");
+  
 
   useEffect(() => {
     const subscriber = refItem.onSnapshot((query) => {
@@ -57,6 +63,34 @@ export default function Conferencia_inventario() {
       setEditingConference(conf);
     }
   }, [route?.params]);
+
+
+// useEffect(() => {
+//     const uid = auth.currentUser?.uid;
+//     if (!uid) return;
+
+//     const subscriber = firestore
+//       .collection("Usuario")
+//       .doc(uid)
+//       .collection("Item")
+//       .orderBy("timestamp", "desc")
+//       .onSnapshot((query) => {
+//         const ItensLista: any[] = [];
+//         query.forEach((documento) => {
+//           ItensLista.push({
+//             ...documento.data(),
+//             key: documento.id,
+//           });
+//         });
+//         setItens(ItensLista);
+//         setFiltradas(ItensLista);
+//         setLoading(false);
+//       });
+
+//     return () => subscriber();
+//   }, []);
+
+
 
   // When items are loaded and we have an editing conference, map its statuses
   useEffect(() => {
@@ -94,7 +128,7 @@ export default function Conferencia_inventario() {
   const allItemsChecked = (): boolean => {
     if (itens.length === 0) return false;
     return itens.every((item) => {
-      const key = item.key || item.id || JSON.stringify(item);
+      const key = item.key || item.id || JSONconst [dataFiltro, setDataFiltro] = useState("");.stringify(item);
       return statuses[key] !== null && statuses[key] !== undefined;
     });
   };
@@ -119,6 +153,18 @@ export default function Conferencia_inventario() {
           status: statuses[key],
         };
       });
+      const filtrarData = (texto: string) => {
+    setFiltro(texto);
+    if (!texto) {
+      setFiltradas(itens);
+    } else {
+      const filtered = itens.filter((conf) => {
+        return dataConf.includes(texto);
+      });
+      setFiltradas(filtered);
+    }
+  };
+
 
       // If editing existing conference, update it; otherwise create new
       if (editingConference && editingConference.key) {
@@ -153,14 +199,26 @@ export default function Conferencia_inventario() {
           .set(conferencia);
 
         Alert.alert(
-          "Sucesso!",
+          "Sucesso!",const filtrarPorData = (texto: string) => {
+    setDataFiltro(texto);
+    if (!texto) {
+      setFiltradas(conferencias);
+    } else {
+      const filtered = conferencias.filter((conf) => {
+        const dataConf = formatarData(conf.data);
+        return dataConf.includes(texto);
+      });
+      setFiltradas(filtered);
+    }
+  };
+
           "Conferência finalizada e armazenada com sucesso",
           [
             {
               text: "OK",
               onPress: () => navigation.goBack(),
             },
-          ]
+          ]filtrarPorData
         );
       }
     } catch (error) {
@@ -173,6 +231,15 @@ export default function Conferencia_inventario() {
     <View style={{ marginTop: 120 }}>
       <View style={styles.card}>
         <Text style={styles.title}>Conferência de Inventário</Text>
+         {/* <TextInput
+            mode="outlined"
+            placeholder="Digite a data..."
+            value={dataFiltro}
+            onChangeText={filtrarPorData}
+            outlineColor="#e2e8f0"
+            activeOutlineColor="#3B82F6"
+            style={{ backgroundColor: "#fff" }}
+          /> */}
         <View style={styles.tableHeader}>
           <View style={[styles.cell, { flex: 2 }]}>
             <Text style={styles.headerText}>Item</Text>

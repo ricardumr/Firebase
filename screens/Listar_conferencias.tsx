@@ -36,7 +36,7 @@ export default function Listar_conferencias() {
       .doc(uid)
       .collection("Conferencia")
       .orderBy("timestamp", "desc")
-      .onSnapshot((query) => {
+      .onSnapshot((query) => {Data
         const conferenciasLista: any[] = [];
         query.forEach((documento) => {
           conferenciasLista.push({
