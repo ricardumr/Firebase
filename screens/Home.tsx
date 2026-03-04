@@ -26,6 +26,7 @@ export default function Home() {
   };
 
   const menuItems = [
+    
     { label: "Listar Itens", screen: "Lista itens", icon: "📋" },
     { label: "Listar Salas", screen: "Lista salas", icon: "🏠" },
     { label: "Cadastrar Item", screen: "Cadastrar item", icon: "➕" },

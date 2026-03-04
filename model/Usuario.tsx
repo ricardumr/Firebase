@@ -4,27 +4,27 @@ export class Usuario{
     public nome:        string;
     public email:       string;
     public senha:       string;
-    public nascimento:  string;
+    public adm:         boolean;
 
 
     constructor(obj ?: Partial<Usuario>){
         if(obj){
-            this.id        =obj.id
-            this.nome      =obj.nome
-            this.email     =obj.email
-            this.senha     =obj.senha
-            this.nascimento      =obj.nascimento
+            this.id         =obj.id
+            this.nome       =obj.nome
+            this.email      =obj.email
+            this.senha      =obj.senha
+            this.adm        =obj.adm
         }
     }
 
     toString () {
         const objeto = `{
-        "id"        :       "${this.id}",
-        "nome"      :       "${this.nome}",
-        "email"     :       "${this.email}",
-        "senha"     :       "${this.senha}",
-        "nascimento"      :       "${this.nascimento}",
-      }`
+        "id"            :       "${this.id}",
+        "nome"          :       "${this.nome}",
+        "email"         :       "${this.email}",
+        "senha"         :       "${this.senha}",
+        "adm"           :       "${this.adm}"
+      }`    
       return objeto
     }
 
@@ -34,7 +34,7 @@ export class Usuario{
             nome        : this.nome,
             email       : this.email,
             senha       : this.senha,
-            nascimento        : this.nascimento
+            adm         : this.adm
         }
         return usuario
     }

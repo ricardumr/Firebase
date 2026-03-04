@@ -18,7 +18,6 @@ import Header from "../components/Header";
 
 export default function Registro() {
   const [formUsuario, setFormUsuario] = useState<Partial<Usuario>>({});
-  const [DataPickerVisivel, setDataPickerVisivel] = useState(false);
   const navigation = useNavigation();
 
   const cadastrar = () => {
@@ -35,20 +34,12 @@ export default function Registro() {
           nome: formUsuario.nome,
           email: formUsuario.email,
           senha: formUsuario.senha,
-          nascimento: formUsuario.nascimento
-            ? formUsuario.nascimento.toISOString()
-            : null,
+
         });
       })
       .catch((erro) => alert(erro.message));
   };
-  const confirmarData = (data) => {
-    setFormUsuario({
-      ...formUsuario,
-      nascimento: data,
-    });
-    setDataPickerVisivel(false);
-  };
+
 
   return (
     <ImageBackground
@@ -83,26 +74,8 @@ export default function Registro() {
           }
         />
 
-        <View style={styles.selectWrapper}>
-          <TouchableOpacity
-            style={styles.inputPickerdata}
-            onPress={() => setDataPickerVisivel(true)}
-          >
-            <Text>
-              {formUsuario.nascimento
-                ? formUsuario.nascimento.toLocaleDateString()
-                : "Selecionar data de nascimento."}
-            </Text>
-          </TouchableOpacity>
 
-          <DateTimePicker
-            isVisible={DataPickerVisivel}
-            mode="date"
-            onConfirm={confirmarData}
-            onCancel={() => setDataPickerVisivel(false)}
-            maximumDate={new Date()}
-          />
-        </View>
+        
 
         <TextInput
           mode="outlined"
@@ -115,7 +88,7 @@ export default function Registro() {
             setFormUsuario({ ...formUsuario, senha: valor })
           }
         />
-
+</View>
         <View style={styles.formActions}>
           <TouchableOpacity style={styles.primaryButton} onPress={cadastrar}>
             <Text style={styles.primaryButtonText}>Cadastrar</Text>
@@ -124,10 +97,10 @@ export default function Registro() {
             style={[styles.botaoOp, { marginTop: 8 }]}
             onPress={() => navigation.replace("Login")}
           >
-            <Text style={styles.textOp}>Login</Text>
+            <Text style={styles.primaryButtonText}>Login</Text>
           </TouchableOpacity>
         </View>
-      </View>
+      
     </ImageBackground>
   );
 }

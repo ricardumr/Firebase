@@ -15,7 +15,7 @@ import styles from "../estilo";
 import { useState } from "react";
 import { auth, firestore } from "../firebase";
 import { TextInput } from "react-native-paper";
-import { Sala } from "../model/Sala";
+import { Sala } from "../model/Sala"; 
 import { useEffect } from "react";
 import { Picker } from "@react-native-picker/picker";
 import Header from "../components/Header";
